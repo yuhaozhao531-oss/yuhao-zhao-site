@@ -1,0 +1,600 @@
+<!doctype html>
+<title>Yuhao Zhao</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #05070c;
+    --panel: #0a0e17;
+    --panel-hi: #0f1420;
+    --line: #1b2433;
+    --line-hi: #2a3547;
+    --ink: #8ea0ba;
+    --ink-bright: #eef4fb;
+    --ink-faint: #46536a;
+    --cyan: #6ee7f0; --cyan-dim: rgba(110,231,240,.1); --cyan-line: rgba(110,231,240,.4);
+    --amber: #ffb454; --amber-dim: rgba(255,180,84,.1); --amber-line: rgba(255,180,84,.4);
+    --violet: #b39ddb; --violet-dim: rgba(179,157,219,.1); --violet-line: rgba(179,157,219,.42);
+    --star: #fff3d6;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:'Noto Sans SC', system-ui, "Segoe UI", sans-serif;
+    line-height:1.7; -webkit-font-smoothing:antialiased; position:relative; }
+  ::selection{ background:var(--cyan); color:var(--bg); }
+  a{ color:inherit; }
+  .mono{ font-family:'JetBrains Mono', ui-monospace, Consolas, monospace; }
+  h1,h2,h3{ margin:0; color:var(--ink-bright); text-wrap:balance; }
+  button{ font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer; }
+  :focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; border-radius:2px; }
+
+  #stars{ position:fixed; inset:0; z-index:0; }
+  body::before{ content:""; position:fixed; inset:0; pointer-events:none; z-index:5;
+    background:repeating-linear-gradient(180deg, rgba(255,255,255,.016) 0px, rgba(255,255,255,.016) 1px, transparent 1px, transparent 3px);
+    mix-blend-mode:overlay; }
+
+  .wrap{ max-width:900px; margin:0 auto; padding:0 28px 60px; position:relative; z-index:2; }
+
+  .hud{ position:sticky; top:0; z-index:30; backdrop-filter:blur(10px); background:rgba(5,7,12,.82); border-bottom:1px solid var(--line); }
+  .hud-in{ max-width:900px; margin:0 auto; padding:13px 28px; display:flex; align-items:center; gap:16px; }
+  .dot{ width:7px; height:7px; border-radius:50%; background:var(--cyan); flex:none; box-shadow:0 0 0 3px var(--cyan-dim); animation:pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
+  .hud-sys{ font-size:.72rem; letter-spacing:.06em; color:var(--ink-faint); white-space:nowrap; }
+  .hud-track{ flex:1; height:3px; background:var(--line); border-radius:2px; overflow:hidden; }
+  .hud-fill{ height:100%; width:0%; background:var(--cyan); box-shadow:0 0 8px var(--cyan); transition:width .5s cubic-bezier(.16,1,.3,1); }
+  .hud-count{ font-size:.72rem; color:var(--ink-faint); white-space:nowrap; flex:none; }
+  .hud-mail{ flex:none; font-size:.72rem; color:var(--amber); text-decoration:none; white-space:nowrap;
+    border:1px solid var(--amber-line); border-radius:3px; padding:5px 10px; transition:background .2s ease; }
+  .hud-mail:hover{ background:var(--amber-dim); }
+  @media (max-width:600px){ .hud-sys{ display:none; } }
+
+  .hero{ padding:56px 0 8px; }
+  .eyebrow{ font-size:.76rem; color:var(--cyan); letter-spacing:.1em; margin-bottom:16px; }
+  .hero h1.en{ font-family:'JetBrains Mono', monospace; font-weight:800; font-size:2.5rem; letter-spacing:-.01em; }
+  .hero h1.cn{ font-size:1.3rem; font-weight:700; margin-top:6px; color:var(--ink); }
+  .role{ margin-top:16px; font-size:1.08rem; color:var(--ink-bright); font-weight:600; }
+  .desc{ margin-top:14px; max-width:56ch; font-size:.96rem; color:var(--ink-faint); }
+  @media (max-width:600px){ .hero h1.en{ font-size:1.9rem; } }
+
+  /* ---- solar system ---- */
+  .system{ position:relative; height:clamp(380px, 64vmin, 640px); margin:32px auto 0; max-width:640px; }
+  .orbit-ring{ position:absolute; top:50%; left:50%; border-radius:50%; border:1px solid; translate:-50% -50%; pointer-events:none; }
+  .orbit-ring.r1{ width:calc(2 * clamp(70px, 15vmin, 128px)); height:calc(2 * clamp(70px, 15vmin, 128px)); border-color:var(--cyan-line); opacity:.4; }
+  .orbit-ring.r2{ width:calc(2 * clamp(112px, 23vmin, 196px)); height:calc(2 * clamp(112px, 23vmin, 196px)); border-color:var(--amber-line); opacity:.35; border-style:dashed; }
+  .orbit-ring.r3{ width:calc(2 * clamp(150px, 31vmin, 268px)); height:calc(2 * clamp(150px, 31vmin, 268px)); border-color:var(--violet-line); opacity:.3; border-style:dotted; }
+
+  .sun{ position:absolute; top:50%; left:50%; translate:-50% -50%; width:clamp(52px,9vmin,74px); height:clamp(52px,9vmin,74px);
+    border-radius:50%; z-index:3; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle at 35% 30%, #fff8e6, var(--star) 45%, var(--amber) 100%);
+    box-shadow:0 0 24px 6px rgba(255,180,84,.5), 0 0 60px 20px rgba(255,180,84,.18);
+    animation:sunpulse 4s ease-in-out infinite; transition:transform .2s ease; }
+  .sun:hover{ transform:translate(-50%,-50%) scale(1.06); }
+  @keyframes sunpulse{ 0%,100%{ box-shadow:0 0 24px 6px rgba(255,180,84,.5), 0 0 60px 20px rgba(255,180,84,.18); } 50%{ box-shadow:0 0 30px 8px rgba(255,180,84,.65), 0 0 74px 26px rgba(255,180,84,.24); } }
+  .sun span{ font-family:'JetBrains Mono',monospace; font-size:.62rem; font-weight:700; color:#3a2405; }
+
+  .orbit-pivot{ position:absolute; top:50%; left:50%; width:0; height:0; animation:spin var(--dur) linear infinite; animation-delay:var(--delay,0s); }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .planet-arm{ position:absolute; left:0; top:0; width:0; height:0; transform:translateX(var(--r)); }
+  .planet{ position:absolute; left:0; top:0; display:flex; flex-direction:column; align-items:center; gap:4px;
+    animation:counterspin var(--dur) linear infinite; animation-delay:var(--delay,0s); }
+  @keyframes counterspin{ from{ transform:translate(-50%,-50%) rotate(0deg); } to{ transform:translate(-50%,-50%) rotate(-360deg); } }
+  .planet-dot{ width:clamp(30px,5.4vmin,42px); height:clamp(30px,5.4vmin,42px); border-radius:50%;
+    background:var(--panel); border:1.5px solid var(--line-hi); display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono',monospace; font-size:.68rem; font-weight:700; color:var(--ink-faint);
+    transition:transform .18s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease; }
+  .planet:hover .planet-dot, .planet:focus-visible .planet-dot{ transform:scale(1.18); }
+  .cat-a .planet-dot{ border-color:var(--cyan-line); }
+  .cat-a:hover .planet-dot, .cat-a:focus-visible .planet-dot{ color:var(--cyan); box-shadow:0 0 10px var(--cyan-dim); }
+  .cat-b .planet-dot{ border-color:var(--amber-line); }
+  .cat-b:hover .planet-dot, .cat-b:focus-visible .planet-dot{ color:var(--amber); box-shadow:0 0 10px var(--amber-dim); }
+  .cat-c .planet-dot{ border-color:var(--violet-line); }
+  .cat-c:hover .planet-dot, .cat-c:focus-visible .planet-dot{ color:var(--violet); box-shadow:0 0 10px var(--violet-dim); }
+  .planet[data-done="true"].cat-a .planet-dot{ background:var(--cyan-dim); border-color:var(--cyan); color:var(--cyan); }
+  .planet[data-done="true"].cat-b .planet-dot{ background:var(--amber-dim); border-color:var(--amber); color:var(--amber); }
+  .planet[data-done="true"].cat-c .planet-dot{ background:var(--violet-dim); border-color:var(--violet); color:var(--violet); }
+
+  .ping{ position:absolute; left:50%; top:50%; translate:-50% -50%; width:100%; height:100%; border-radius:50%;
+    border:1.5px solid var(--cyan); opacity:0; pointer-events:none; }
+  .ping.go{ animation:pingburst .55s cubic-bezier(.16,1,.3,1); }
+  @keyframes pingburst{ 0%{ opacity:.9; transform:translate(-50%,-50%) scale(.4); } 100%{ opacity:0; transform:translate(-50%,-50%) scale(3.2); } }
+
+  .system.paused .orbit-pivot, .system.paused .planet, .sun.paused{ animation-play-state:paused; }
+
+  /* ---- legend / category lists ---- */
+  .legend{ margin-top:56px; display:flex; flex-direction:column; gap:34px; }
+  .cat-head{ display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+  .cat-swatch{ width:10px; height:10px; border-radius:50%; flex:none; }
+  .cat-a .cat-swatch, .cat-swatch.a{ background:var(--cyan); box-shadow:0 0 6px var(--cyan); }
+  .cat-b .cat-swatch, .cat-swatch.b{ background:var(--amber); box-shadow:0 0 6px var(--amber); }
+  .cat-c .cat-swatch, .cat-swatch.c{ background:var(--violet); box-shadow:0 0 6px var(--violet); }
+  .cat-head h2{ font-size:.98rem; }
+  .cat-head .cat-note{ font-size:.74rem; color:var(--ink-faint); margin-left:auto; }
+  .cat-group{ border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+
+  .row{ display:flex; align-items:center; gap:16px; padding:16px 18px; border-top:1px solid var(--line); transition:background .2s ease; text-align:left; width:100%; }
+  .row:first-child{ border-top:none; }
+  .row:hover{ background:var(--panel-hi); }
+  .row-id{ flex:0 0 30px; font-size:.76rem; color:var(--ink-faint); }
+  .row[data-done="true"] .row-id{ color:var(--ink-bright); }
+  .row-main{ flex:1; min-width:0; }
+  .row-name{ font-size:.98rem; font-weight:600; color:var(--ink-bright); }
+  .row-sub{ font-size:.78rem; color:var(--ink-faint); margin-top:3px; }
+  .row-status{ flex:0 0 auto; font-size:.66rem; color:var(--ink-faint); border:1px dashed var(--line-hi); border-radius:3px; padding:4px 9px; white-space:nowrap; }
+  .row[data-done="true"] .row-status{ border-style:solid; }
+  .cat-a .row[data-done="true"] .row-status{ color:var(--cyan); border-color:var(--cyan-line); background:var(--cyan-dim); }
+  .cat-b .row[data-done="true"] .row-status{ color:var(--amber); border-color:var(--amber-line); background:var(--amber-dim); }
+  .cat-c .row[data-done="true"] .row-status{ color:var(--violet); border-color:var(--violet-line); background:var(--violet-dim); }
+  .row-go{ flex:0 0 auto; font-family:'JetBrains Mono',monospace; font-size:.76rem; color:var(--ink-faint); transition:color .2s ease, transform .2s ease; }
+  .row:hover .row-go{ color:var(--ink-bright); transform:translateX(3px); }
+
+  .meta-section{ margin-top:48px; }
+  .meta-head{ display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+  .meta-head h2{ font-size:.98rem; }
+
+  /* ---- scrim + drawer ---- */
+  .scrim{ position:fixed; inset:0; background:rgba(2,4,8,.65); backdrop-filter:blur(2px); z-index:40; opacity:0; pointer-events:none; transition:opacity .3s ease; }
+  .scrim.on{ opacity:1; pointer-events:auto; }
+  .drawer{ position:fixed; top:0; right:0; height:100%; width:min(500px, 100%); background:var(--panel); border-left:1px solid var(--cyan-line); z-index:50;
+    translate:100% 0; transition:translate .38s cubic-bezier(.16,1,.3,1); display:flex; flex-direction:column; overflow:hidden; box-shadow:-40px 0 80px rgba(0,0,0,.5); }
+  .drawer.on{ translate:0 0; }
+  @media (max-width:640px){
+    .drawer{ top:auto; bottom:0; right:0; left:0; width:100%; height:min(88vh, 100%); border-left:none; border-top:1px solid var(--cyan-line); border-radius:14px 14px 0 0; translate:0 100%; }
+    .drawer.on{ translate:0 0; }
+  }
+  .drawer-head{ padding:18px 24px 14px; border-bottom:1px solid var(--line); flex:none; }
+  .drawer-head-top{ display:flex; align-items:center; justify-content:space-between; }
+  .drawer-head .n{ color:var(--cyan); font-size:.76rem; letter-spacing:.06em; }
+  .drawer-close{ font-size:.74rem; color:var(--ink-faint); border:1px solid var(--line-hi); border-radius:4px; padding:6px 12px; transition:color .2s ease, border-color .2s ease; }
+  .drawer-close:hover{ color:var(--ink-bright); border-color:var(--ink-faint); }
+  .drawer-decode{ margin-top:10px; font-size:.72rem; color:var(--cyan); min-height:1.2em; }
+  .drawer-title{ margin-top:8px; font-size:1.1rem; }
+  .drawer-body{ padding:8px 24px 40px; overflow-y:auto; flex:1; }
+
+  .lede{ font-size:1.1rem; color:var(--ink-bright); font-weight:600; max-width:54ch; margin:14px 0 20px; line-height:1.55; min-height:1.55em; }
+  .lede .accent{ color:var(--cyan); }
+  .typecursor{ display:inline-block; width:2px; height:1em; background:var(--cyan); vertical-align:-2px; margin-left:2px; animation:blink 1s step-start infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+  .about p{ font-size:.96rem; color:var(--ink); }
+  .about p + p{ margin-top:14px; }
+  .about b{ color:var(--ink-bright); }
+  blockquote{ margin:22px 0 0; padding:14px 20px; border-left:2px solid var(--cyan); background:var(--cyan-dim); border-radius:0 3px 3px 0; font-size:.98rem; color:var(--ink-bright); font-weight:600; }
+
+  .proj-detail .stage{ display:inline-block; font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--amber); border:1px solid var(--amber-line); background:var(--amber-dim); border-radius:3px; padding:3px 8px; margin-bottom:12px; }
+  .proj-detail p{ color:var(--ink); font-size:.94rem; }
+  .proj-detail .tags{ margin-top:14px; display:flex; gap:8px; flex-wrap:wrap; }
+  .proj-detail .tags span{ font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--ink-faint); border:1px solid var(--line-hi); border-radius:3px; padding:3px 8px; }
+  .proj-contact{ margin-top:14px; font-size:.72rem; color:var(--amber); }
+  .demo-link{ display:inline-flex; align-items:center; gap:8px; margin-top:14px; padding:9px 16px; border:1px solid var(--cyan-line); border-radius:4px; color:var(--cyan); text-decoration:none; font-size:.82rem; font-weight:600; transition:background .2s ease; }
+  .demo-link:hover{ background:var(--cyan-dim); }
+  .demo-note{ margin-top:8px; font-size:.72rem; color:var(--ink-faint); }
+
+  .note{ display:flex; gap:18px; align-items:baseline; padding:13px 0; border-top:1px solid var(--line); }
+  .note:first-child{ border-top:none; padding-top:2px; }
+  .note .date{ flex:0 0 68px; font-family:'JetBrains Mono',monospace; font-size:.74rem; color:var(--ink-faint); }
+  .note .title{ flex:1; font-size:.94rem; color:var(--ink); }
+  .note .status{ flex:none; font-family:'JetBrains Mono',monospace; font-size:.66rem; color:var(--ink-faint); border:1px dashed var(--line-hi); border-radius:3px; padding:3px 8px; white-space:nowrap; }
+  .note-foot{ margin-top:16px; font-size:.84rem; color:var(--ink-faint); }
+
+  .contact-pane p{ font-size:.95rem; color:var(--ink); max-width:44ch; }
+  .mail-btn{ display:inline-flex; align-items:center; gap:10px; margin-top:22px; padding:13px 24px; border:1px solid var(--amber-line); border-radius:4px; color:var(--amber); text-decoration:none; font-size:.9rem; font-weight:600; transition:background .25s ease, transform .25s ease; }
+  .mail-btn:hover{ background:var(--amber-dim); transform:translateY(-2px); }
+  .foot-sign{ margin-top:40px; font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--ink-faint); }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; } }
+</style>
+
+<canvas id="stars"></canvas>
+
+<div class="hud">
+  <div class="hud-in">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="hud-sys mono">YUHAO-ZHAO // SYSTEM MAP</span>
+    <div class="hud-track"><div class="hud-fill" id="hudFill"></div></div>
+    <span class="hud-count mono" id="hudCount">已探索 0/10</span>
+    <a class="hud-mail mono" href="mailto:yuhaozhao531@gmail.com">TRANSMIT ↗</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <p class="eyebrow mono">AI · 独立创业 · 金融工程</p>
+    <h1 class="en">Yuhao Zhao</h1>
+    <h1 class="cn">赵彧颢</h1>
+    <p class="role">用 AI 放大普通人的能力</p>
+    <p class="desc">这是我的星系：中间是我，三圈轨道是三类不同的事——核心产品线、企业咨询、产品实验。点星球，或者点下面的列表，都能看详情。</p>
+  </div>
+
+  <div class="system" id="system">
+    <div class="orbit-ring r1"></div>
+    <div class="orbit-ring r2"></div>
+    <div class="orbit-ring r3"></div>
+
+    <button class="sun" id="sunBtn" data-key="about" aria-label="关于我"><span class="mono">ME</span></button>
+
+    <div class="orbit-pivot" style="--dur:42s; --delay:0s;">
+      <div class="planet-arm" style="--r:clamp(70px,15vmin,128px);">
+        <button class="planet cat-a" data-key="jidiantong" style="--dur:42s; --delay:0s;" aria-label="集点通">
+          <span class="planet-dot mono">01</span>
+        </button>
+      </div>
+    </div>
+    <div class="orbit-pivot" style="--dur:42s; --delay:-14s;">
+      <div class="planet-arm" style="--r:clamp(70px,15vmin,128px);">
+        <button class="planet cat-a" data-key="forgeone" style="--dur:42s; --delay:-14s;" aria-label="ForgeOne">
+          <span class="planet-dot mono">02</span>
+        </button>
+      </div>
+    </div>
+    <div class="orbit-pivot" style="--dur:42s; --delay:-28s;">
+      <div class="planet-arm" style="--r:clamp(70px,15vmin,128px);">
+        <button class="planet cat-a" data-key="ceolab" style="--dur:42s; --delay:-28s;" aria-label="CEO LAB">
+          <span class="planet-dot mono">03</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="orbit-pivot" style="--dur:58s; --delay:-9s;">
+      <div class="planet-arm" style="--r:clamp(112px,23vmin,196px);">
+        <button class="planet cat-b" data-key="fde" style="--dur:58s; --delay:-9s;" aria-label="AI 企业落地服务">
+          <span class="planet-dot mono">04</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="orbit-pivot" style="--dur:76s; --delay:0s;">
+      <div class="planet-arm" style="--r:clamp(150px,31vmin,268px);">
+        <button class="planet cat-c" data-key="polaris" style="--dur:76s; --delay:0s;" aria-label="极星 AI 训练营">
+          <span class="planet-dot mono">05</span>
+        </button>
+      </div>
+    </div>
+    <div class="orbit-pivot" style="--dur:76s; --delay:-25.3s;">
+      <div class="planet-arm" style="--r:clamp(150px,31vmin,268px);">
+        <button class="planet cat-c" data-key="direction" style="--dur:76s; --delay:-25.3s;" aria-label="方向探索">
+          <span class="planet-dot mono">06</span>
+        </button>
+      </div>
+    </div>
+    <div class="orbit-pivot" style="--dur:76s; --delay:-50.6s;">
+      <div class="planet-arm" style="--r:clamp(150px,31vmin,268px);">
+        <button class="planet cat-c" data-key="interview" style="--dur:76s; --delay:-50.6s;" aria-label="模拟面试">
+          <span class="planet-dot mono">07</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="cat-a">
+      <div class="cat-head"><span class="cat-swatch a"></span><h2>核心产品线</h2><span class="cat-note mono">主线三件事</span></div>
+      <div class="cat-group">
+        <button class="row" data-key="jidiantong">
+          <span class="row-id mono">01</span>
+          <span class="row-main"><span class="row-name">集点通</span><span class="row-sub">校园信息平台 · 开发中</span></span>
+          <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
+        </button>
+        <button class="row" data-key="forgeone">
+          <span class="row-id mono">02</span>
+          <span class="row-main"><span class="row-name">ForgeOne</span><span class="row-sub">一人公司 AI 业务基础设施 · 系统开发中</span></span>
+          <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
+        </button>
+        <button class="row" data-key="ceolab">
+          <span class="row-id mono">03</span>
+          <span class="row-main"><span class="row-name">CEO LAB</span><span class="row-sub">青少年 AI 能力实验室 · MVP 已就绪</span></span>
+          <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="cat-b">
+      <div class="cat-head"><span class="cat-swatch b"></span><h2>企业咨询</h2><span class="cat-note mono">对客服务</span></div>
+      <div class="cat-group">
+        <button class="row" data-key="fde">
+          <span class="row-id mono">04</span>
+          <span class="row-main"><span class="row-name">AI 企业落地服务</span><span class="row-sub">流程自动化 + 重工业可行性研究 · 对客服务中</span></span>
+          <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="cat-c">
+      <div class="cat-head"><span class="cat-swatch c"></span><h2>产品实验</h2><span class="cat-note mono">自用原型</span></div>
+      <div class="cat-group">
+        <button class="row" data-key="polaris">
+          <span class="row-id mono">05</span>
+          <span class="row-main"><span class="row-name">极星 AI 训练营</span><span class="row-sub">中文版 AI/ML 学习平台 · 已上线</span></span>
+          <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
+        </button>
+        <button class="row" data-key="direction">
+          <span class="row-id mono">06</span>
+          <span class="row-main"><span class="row-name">方向探索</span><span class="row-sub">高考后方向探索工具 · 原型阶段</span></span>
+          <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
+        </button>
+        <button class="row" data-key="interview">
+          <span class="row-id mono">07</span>
+          <span class="row-main"><span class="row-name">模拟面试</span><span class="row-sub">AI 模拟面试工具 · 本地原型</span></span>
+          <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="meta-section">
+    <div class="meta-head"><h2 class="mono" style="color:var(--ink-faint); font-size:.8rem; letter-spacing:.06em;">笔记 / 联系</h2></div>
+    <div class="cat-group">
+      <button class="row" data-key="notes">
+        <span class="row-id mono">·</span>
+        <span class="row-main"><span class="row-name">笔记</span><span class="row-sub">3 条标题占位，整理中</span></span>
+        <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
+      </button>
+      <button class="row" data-key="contact">
+        <span class="row-id mono">·</span>
+        <span class="row-main"><span class="row-name">联系</span><span class="row-sub">写信 / 合作</span></span>
+        <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitleText">
+  <div class="drawer-head">
+    <div class="drawer-head-top">
+      <span class="n mono" id="drawerN"></span>
+      <button class="drawer-close mono" id="drawerClose">✕ 关闭</button>
+    </div>
+    <p class="drawer-decode mono" id="drawerDecode"></p>
+    <h2 class="drawer-title" id="drawerTitleText"></h2>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+</aside>
+
+<div hidden id="panes">
+
+  <div data-key="about" data-title="关于我" data-n="星核 · ME">
+    <div class="about">
+      <p class="lede" id="ledeText"><span id="ledeVisible"></span><span class="typecursor" id="ledeCursor"></span></p>
+      <p>出生于商人家庭，但对市场、决策、价值创造的理解，始终是零散的，而不是体系化的。大学阶段第一次真正接触 AI，一开始只把它当成修改文本、检查语法的辅助工具——直到我把 AI 和自己的金融知识结合，做出第一个投资决策系统，才真正意识到一件事：</p>
+      <blockquote>AI 并非替代人思考，而是在放大人的认知与决策能力。</blockquote>
+      <p style="margin-top:22px;">这个判断后来变成了我在做的所有事情的起点：先是校园里的 <b>集点通</b>，然后是面向创业者的 <b>ForgeOne</b>，再到面向青少年的 <b>CEO LAB</b>——用的是同一套逻辑，只是放大的对象不同。</p>
+      <p style="margin-top:14px;">创业也不是这两年才开始的：16 岁起陆续做过外贸、咨询、学术服务方向的小生意；2024 年起把精力集中到用 AI 做降本增效的实践上，也一直在运营创业内容账号"小鱼在创业"。</p>
+    </div>
+  </div>
+
+  <div data-key="jidiantong" data-title="集点通" data-n="核心产品线 · 01">
+    <div class="proj-detail">
+      <span class="stage mono">开发中</span>
+      <p>从校园信息群里的高频需求出发做的校园平台，先用网站验证需求，现在正按大学生的使用习惯转型为小程序，还在开发中，暂时没有上线时间表。</p>
+      <div class="tags"><span>小程序</span><span>校园平台</span><span>需求验证</span></div>
+    </div>
+  </div>
+
+  <div data-key="forgeone" data-title="ForgeOne" data-n="核心产品线 · 02">
+    <div class="proj-detail">
+      <span class="stage mono">系统开发中</span>
+      <p>一人公司的 AI 业务基础设施：主控 AI 拆解商业任务，并行调度子 Agent 完成设计、生产、销售全链路，用决策卡片、成本账本和 Trust Score 把每一步的进度、花费和证据都摊开给你看。目前已经跑通数字产品、内容型业务、预售型项目三类首发场景的完整闭环，后端 170+ 项自动化测试通过，正准备 Light 创造营路演。</p>
+      <div class="tags"><span>多智能体</span><span>成本账本</span><span>DeepResearch</span></div>
+      <a class="demo-link" href="https://kentucky-territories-harper-youth.trycloudflare.com/" target="_blank" rel="noopener">查看演示 ↗</a>
+      <p class="demo-note">临时开发环境（Cloudflare Tunnel），链接可能会过期或变化</p>
+    </div>
+  </div>
+
+  <div data-key="ceolab" data-title="CEO LAB" data-n="核心产品线 · 03">
+    <div class="proj-detail">
+      <span class="stage mono">MVP 已就绪</span>
+      <p>写给 10–15 岁的 AI 能力实验室。不预设课程和标准答案，孩子从真实问题出发，用结构化的七天节奏（定位→研发→打磨→迭代→定价→路演→复盘）和 AI 协作拆解问题。"AI 协作拆解"和"试错修正"这两条机制已经跑通，"求助老师""小组协作"目前还是占位功能，还没接后端。</p>
+      <div class="tags"><span>AI 协作</span><span>财商教育</span><span>10-15 岁</span></div>
+    </div>
+  </div>
+
+  <div data-key="fde" data-title="AI 企业落地服务" data-n="企业咨询 · 04">
+    <div class="proj-detail">
+      <span class="stage mono">对客服务中</span>
+      <p>以「AI 流程架构师」的身份接的落地项目，把 AI 用进具体的企业流程：给一家药店把出入库从拍照记录改成自动生成台账，从半小时缩短到几分钟；帮一家国企把口口相传的调薪、停发规则整理成系统化流程；用自研的 ForgeOne 串联数据提取、风控、报告生成，做多智能体审批流程。也接涉密内网部署的项目——给贵州一个磷煤化工园区做的重工业可行性研究"序安 Process Sentinel"，两个原型（渗滤液早期预警、以渣定产仿真）目前基于模拟数据，还没接真实传感器。</p>
+      <div class="tags"><span>流程自动化</span><span>多智能体</span><span>对客咨询</span></div>
+      <a class="demo-link" href="http://47.107.29.95:3080" target="_blank" rel="noopener">序安 Process Sentinel 演示 ↗</a>
+      <p class="proj-contact mono">合作联系：18082950989（微信同号）· 内容号"小鱼在创业"</p>
+    </div>
+  </div>
+
+  <div data-key="polaris" data-title="极星 AI 训练营" data-n="产品实验 · 05">
+    <div class="proj-detail">
+      <span class="stage mono">已上线</span>
+      <p>复刻自 Polaris ML/AI Training 的中文版 AI/ML 学习平台：7 个训练营、25 个实战项目、13 个学习主题，覆盖机器学习基础到 AI 智能体，还做了账号系统和定价页。前端 React + Vite + Tailwind，后端 Express + JWT，账号和学习进度持久化在 Postgres。</p>
+      <div class="tags"><span>AI/ML 课程</span><span>React</span><span>已上线</span></div>
+      <a class="demo-link" href="https://polaris-cn.onrender.com" target="_blank" rel="noopener">查看网站 ↗</a>
+      <p class="demo-note">Render 免费套餐，长时间没人访问会休眠，第一次打开可能要等几十秒</p>
+    </div>
+  </div>
+
+  <div data-key="direction" data-title="方向探索" data-n="产品实验 · 06">
+    <div class="proj-detail">
+      <span class="stage mono">原型阶段</span>
+      <p>写给刚考完高考的大一新生：不是 MBTI 测试，不给你贴标签，而是把专业、城市、大学四年怎么过这些问题一步步问清楚，最后生成一份方向分析报告。用的是 DeepSeek API，Key 只存在你自己浏览器里。目前是单文件原型，还没正式上线。</p>
+      <div class="tags"><span>DeepSeek</span><span>生涯规划</span><span>原型</span></div>
+    </div>
+  </div>
+
+  <div data-key="interview" data-title="模拟面试" data-n="产品实验 · 07">
+    <div class="proj-detail">
+      <span class="stage mono">本地原型</span>
+      <p>从一个粘贴材料就能生成结构化面试题的轻量工具，迭代成了多用户平台：账号系统、简历解析、结构化 / 半结构化 / 压力面试三种模式、五维度打分报告。数字人面试官还在实验——语音合成链路已经用真实调用跑通，但视频画面渲染没做完，启用后暂时只有声音、看不到人。</p>
+      <div class="tags"><span>AI 面试官</span><span>本地部署</span><span>实验性</span></div>
+    </div>
+  </div>
+
+  <div data-key="notes" data-title="笔记" data-n="LOG">
+    <div class="note" style="border-top:none; padding-top:0;">
+      <span class="date mono">2026.08</span><span class="title">问题解决不是线性过程，而是不断试错的循环</span><span class="status mono">整理中</span>
+    </div>
+    <div class="note"><span class="date mono">2026.06</span><span class="title">分工应该由"解决问题的需要"产生，而不是提前指定</span><span class="status mono">整理中</span></div>
+    <div class="note"><span class="date mono">2026.04</span><span class="title">从网站到小程序：验证一个校园需求要多久</span><span class="status mono">整理中</span></div>
+    <p class="note-foot mono">全文整理中，先留标题占位。</p>
+  </div>
+
+  <div data-key="contact" data-title="联系" data-n="OPEN CHANNEL">
+    <div class="contact-pane">
+      <p>想聊聊 ForgeOne、CEO LAB，或者别的 AI 想法，欢迎写信给我——不管你是想合作，还是单纯想吐槽这个网站。</p>
+      <a class="mail-btn" href="mailto:yuhaozhao531@gmail.com">写邮件给我 ↗</a>
+      <p class="foot-sign">© 2026 Yuhao Zhao · 最近更新 2026.09</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var canvas = document.getElementById('stars');
+  var ctx = canvas.getContext('2d');
+  var stars = [];
+  function resizeCanvas(){
+    canvas.width = window.innerWidth * devicePixelRatio;
+    canvas.height = window.innerHeight * devicePixelRatio;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    var count = Math.round((window.innerWidth * window.innerHeight) / 9000);
+    stars = [];
+    for(var i=0;i<count;i++){
+      stars.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height,
+        r:(Math.random()*1.3+0.3)*devicePixelRatio, phase:Math.random()*Math.PI*2,
+        speed:Math.random()*0.015+0.005, drift:Math.random()*0.06 });
+    }
+  }
+  function drawStars(t){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(var i=0;i<stars.length;i++){
+      var s = stars[i];
+      var tw = reduced ? 0.75 : (Math.sin(t*s.speed+s.phase)*0.35+0.65);
+      ctx.beginPath(); ctx.fillStyle='rgba(220,232,245,'+(tw*0.85)+')'; ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
+      if(!reduced){ s.y += s.drift; if(s.y>canvas.height) s.y=0; }
+    }
+  }
+  resizeCanvas(); window.addEventListener('resize', resizeCanvas);
+  if(reduced){ drawStars(0); } else { (function loop(t){ drawStars(t||0); requestAnimationFrame(loop); })(); }
+
+  var STORE_KEY = 'yz-orbit-progress';
+  var state = {};
+  try{ state = JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); }catch(e){ state = {}; }
+
+  var allKeys = ['about','jidiantong','forgeone','ceolab','fde','polaris','direction','interview','notes','contact'];
+  var total = allKeys.length;
+
+  var planets = Array.prototype.slice.call(document.querySelectorAll('.planet'));
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.row'));
+  var sun = document.getElementById('sunBtn');
+  var system = document.getElementById('system');
+
+  function markDone(key){
+    if(state[key]) return;
+    state[key] = true;
+    planets.forEach(function(p){ if(p.getAttribute('data-key')===key) p.setAttribute('data-done','true'); });
+    rows.forEach(function(r){ if(r.getAttribute('data-key')===key){ r.setAttribute('data-done','true'); r.querySelector('.row-status').textContent='已探索'; } });
+    if(key==='about') sun.setAttribute('data-done','true');
+    updateHud(); persist();
+  }
+  function updateHud(){
+    var done = allKeys.filter(function(k){ return state[k]; }).length;
+    document.getElementById('hudFill').style.width = (done/total*100)+'%';
+    document.getElementById('hudCount').textContent = '已探索 '+done+'/'+total;
+  }
+  function persist(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){} }
+
+  allKeys.forEach(function(k){ if(state[k]){
+    planets.forEach(function(p){ if(p.getAttribute('data-key')===k) p.setAttribute('data-done','true'); });
+    rows.forEach(function(r){ if(r.getAttribute('data-key')===k){ r.setAttribute('data-done','true'); r.querySelector('.row-status').textContent='已探索'; } });
+    if(k==='about') sun.setAttribute('data-done','true');
+  }});
+  updateHud();
+
+  var scrim = document.getElementById('scrim');
+  var drawer = document.getElementById('drawer');
+  var drawerBody = document.getElementById('drawerBody');
+  var drawerTitle = document.getElementById('drawerTitleText');
+  var drawerN = document.getElementById('drawerN');
+  var drawerDecode = document.getElementById('drawerDecode');
+  var panes = document.getElementById('panes');
+  var ledeStarted = false;
+  var lastFocused = null;
+
+  var LEDE_PLAIN = '进入大学之前，我没接受过系统性的财商教育，也没真正接触过 AI。';
+  function renderLedeStatic(){
+    var el = document.getElementById('ledeVisible'); if(!el) return;
+    var idx = LEDE_PLAIN.lastIndexOf('AI'); el.textContent='';
+    var b=document.createElement('span'); b.textContent=LEDE_PLAIN.slice(0,idx);
+    var a=document.createElement('span'); a.className='accent'; a.textContent='AI';
+    var c=document.createElement('span'); c.textContent=LEDE_PLAIN.slice(idx+2);
+    el.appendChild(b); el.appendChild(a); el.appendChild(c);
+    var cursor=document.getElementById('ledeCursor'); if(cursor) cursor.remove();
+  }
+  function typeLede(){
+    var el=document.getElementById('ledeVisible'); var cursor=document.getElementById('ledeCursor');
+    var i=0, accentIdx=LEDE_PLAIN.lastIndexOf('AI');
+    (function step(){
+      if(i>LEDE_PLAIN.length){ if(cursor) cursor.remove(); return; }
+      var chunk=LEDE_PLAIN.slice(0,i); el.innerHTML='';
+      var b=document.createElement('span'); b.textContent=chunk.slice(0,Math.min(chunk.length,accentIdx)); el.appendChild(b);
+      if(chunk.length>accentIdx){ var a=document.createElement('span'); a.className='accent'; a.textContent=chunk.slice(accentIdx); el.appendChild(a); }
+      i+=2; setTimeout(step,26);
+    })();
+  }
+  function typeDecode(text, done){
+    if(reduced){ drawerDecode.textContent=text; if(done) done(); return; }
+    drawerDecode.textContent=''; var i=0;
+    (function step(){ drawerDecode.textContent=text.slice(0,i); i+=2; if(i<=text.length){ setTimeout(step,14); } else if(done){ done(); } })();
+  }
+
+  function openDrawer(key, triggerEl){
+    var pane = panes.querySelector('[data-key="'+key+'"]');
+    if(!pane) return;
+    lastFocused = triggerEl;
+    drawerN.textContent = pane.getAttribute('data-n');
+    drawerTitle.textContent = pane.getAttribute('data-title');
+    drawerBody.innerHTML = pane.innerHTML;
+    drawerBody.style.transition = 'none'; drawerBody.style.opacity = reduced ? '1' : '0';
+    typeDecode('> LINK ESTABLISHED — DECODING TRANSMISSION...', function(){
+      drawerBody.style.transition = 'opacity .4s ease'; drawerBody.style.opacity = '1';
+    });
+    drawer.classList.add('on'); scrim.classList.add('on');
+    system.classList.add('paused'); sun.classList.add('paused');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('drawerClose').focus();
+    markDone(key);
+    if(key==='about' && !ledeStarted){ ledeStarted=true; if(reduced){ renderLedeStatic(); } else { typeLede(); } }
+  }
+  function closeDrawer(){
+    drawer.classList.remove('on'); scrim.classList.remove('on');
+    system.classList.remove('paused'); sun.classList.remove('paused');
+    document.body.style.overflow = '';
+    if(lastFocused) lastFocused.focus();
+  }
+
+  function ping(el){
+    var burst = document.createElement('span');
+    burst.className = 'ping';
+    el.appendChild(burst);
+    requestAnimationFrame(function(){
+      burst.classList.add('go');
+      burst.addEventListener('animationend', function(){ burst.remove(); }, {once:true});
+    });
+    setTimeout(function(){ if(burst.parentNode) burst.remove(); }, 800);
+  }
+
+  planets.forEach(function(p){ p.style.position = p.style.position || 'relative';
+    p.addEventListener('click', function(){ ping(p); openDrawer(p.getAttribute('data-key'), p); });
+  });
+  sun.style.position = 'absolute';
+  sun.addEventListener('click', function(){ ping(sun); openDrawer('about', sun); });
+  rows.forEach(function(r){ r.addEventListener('click', function(){ openDrawer(r.getAttribute('data-key'), r); }); });
+
+  document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+  scrim.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && drawer.classList.contains('on')) closeDrawer(); });
+
+  if(state['about']){ ledeStarted=true; renderLedeStatic(); }
+})();
+</script>
