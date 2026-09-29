@@ -197,6 +197,15 @@
   .article th, .article td{ border:1px solid var(--line-hi); padding:6px 8px; text-align:left; vertical-align:top; }
   .article th{ color:var(--ink-bright); background:var(--cyan-dim); }
   .article .sign{ color:var(--ink-faint); font-style:italic; }
+  .article img{ display:block; max-width:100%; border-radius:6px; margin:14px 0; border:1px solid var(--line); }
+  .contact-form{ margin-top:22px; max-width:44ch; display:flex; flex-direction:column; gap:14px; }
+  .contact-form[hidden]{ display:none; }
+  .cf-field{ display:flex; flex-direction:column; gap:6px; font-size:.78rem; color:var(--ink-faint); }
+  .cf-field input, .cf-field textarea{ font:inherit; font-size:.92rem; color:var(--ink-bright); background:var(--bg); border:1px solid var(--line-hi); border-radius:4px; padding:10px 12px; resize:vertical; }
+  .cf-field input:focus, .cf-field textarea:focus{ outline:2px solid var(--cyan); outline-offset:1px; border-color:var(--cyan-line); }
+  .cf-status{ font-size:.82rem; min-height:1.4em; color:var(--ink-faint); }
+  .cf-status.ok{ color:#7de3a0; }
+  .cf-status.err{ color:#ff8080; }
   .note-foot{ margin-top:16px; font-size:.84rem; color:var(--ink-faint); }
 
   .contact-pane p{ font-size:.95rem; color:var(--ink); max-width:44ch; }
@@ -372,7 +381,7 @@
     <div class="cat-group">
       <button class="row" data-key="notes">
         <span class="row-id mono">·</span>
-        <span class="row-main"><span class="row-name">笔记</span><span class="row-sub">4 篇文章 · 企业 AI 落地</span></span>
+        <span class="row-main"><span class="row-name">笔记</span><span class="row-sub">5 篇文章 · 企业 AI 落地</span></span>
         <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
       </button>
       <button class="row" data-key="contact">
@@ -632,6 +641,46 @@
       </article>
     </details>
     <details class="note-item">
+      <summary class="note"><span class="date mono">2026.09</span><span class="title">磷石膏渣库渗滤液风险，我们做了一个只读的AI辅助方案，开放试用</span><span class="status mono">约 3 分钟</span></summary>
+      <article class="article">
+<h3>01 先搞清楚“什么不能做”</h3>
+<p>化工行业的DCS系统承担生产控制与安全联锁，任何第三方系统只允许只读获取数据，不允许向DCS下发写控制指令。</p>
+<p>这是硬性安全边界。</p>
+<p>所以我们的判断很明确：“AI接管生产”在化工行业不成立。能做的是在DCS之外搭建一套辅助系统——只读采集数据，做预测、预警、仿真，结果供工艺人员参考，不自动调节任何阀门。</p>
+<p>这个定位决定了后面所有技术路线的选择。</p>
+<h3>02 我们选了四个场景</h3>
+<img src="uploads/74144faf-47f3-42bf-b19d-4da08ca94375.jpg" alt="" loading="lazy">
+<p>从公开的环评报告、政策文件、学术文献入手，梳理了几个可以切入的场景。</p>
+<p>算法是最后一公里，第一公里永远在现场。</p>
+<p>目前已实现的四个场景：</p>
+<h4>场景一：以渣定产·园区物料平衡仿真</h4>
+<p>给定磷石膏消纳能力上限与各支路请求处理量，判断是否超限，超限时给出三种压减方案供参考。</p>
+<img src="uploads/638ec401-a841-4ea7-8985-3073224d021b.png" alt="" loading="lazy">
+<p>不是自动下发的排产指令，最终决策仍由生产调度人员完成。</p>
+<h4>场景二：渣库渗滤液早期预警（示意）</h4>
+<p>这个场景基于一个真实发生过的事件——2017年环保督查发现，渗滤液先漏、后测到，顺序是先导指标先漂移，总磷在泉点出露后才被发现。</p>
+<p>逻辑是：防渗膜异常、电导率、边坡位移等先导指标，理论上能在总磷于泉点超标之前反映异常。</p>
+<img src="uploads/984b1d12-c194-4a20-8c35-6f00a5bf7244.png" alt="" loading="lazy">
+<p>图中示意：先导指标率先持续偏离基线，总磷在约43天后才于泉点突破特别排放限值——提前预警。</p>
+<h4>场景三：浮选投料·滞后化验软测量方法验证</h4>
+<p>用真实铁矿浮选数据（CCO）验证“实时传感器预测滞后化验指标”的可行性。</p>
+<img src="uploads/bb1e45c0-8b90-46cb-bf1a-f0c5c92d5c98.png" alt="" loading="lazy">
+<p><b>结论：效果不理想，还不能用。准确度比“什么都不看、直接报一个固定数字”稍微好一点点，强得很有限。</b></p>
+<p>不是所有尝试都成功，但失败本身也是信息。</p>
+<h4>场景四：金属盐投加沉淀·方法验证</h4>
+<p>用真实污水厂化学除磷SCADA数据验证沉淀反应的控制变量能否解释残留浓度。</p>
+<img src="uploads/cd26d6a3-3daa-49d5-b456-ed89ec2a45f5.png" alt="" loading="lazy">
+<p><b>结论：效果不错，R²约0.68，但需警惕闭环反馈耦合。投药量和残留浓度本来就是绑在一起变化的，准确度里有系统自己的调节规律，不完全是模型独立发现的新东西。</b></p>
+<h3>03 我们想找什么样的人聊</h3>
+<p>如果你符合以下任意一条，欢迎上手试一试、提意见：</p>
+<ul><li>化工企业的生产调度、工艺工程师</li><li>从事环保管理、环境监测的从业者</li><li>关注AI在流程工业落地的产品经理或技术负责人</li><li>经历过“事后才发现问题”的一线操作人员</li></ul>
+<h3>写在最后</h3>
+<p>Algorithm is the last mile,the first mile is always on‑site.</p>
+<p>这套系统的核心不是“AI很厉害”。是一个十年没彻底解决的问题，AI能否在“事后发现”和“事故扩大”之间增加一个缓冲层。在训练模型之前，先训练自己对真实世界的理解。AI落地，从搞懂一个真实业务场景开始。</p>
+<p>欢迎来试一试。</p>
+      </article>
+    </details>
+    <details class="note-item">
       <summary class="note"><span class="date mono">2026.08</span><span class="title">企业 AI 落地（2）：一套能让 AI 真正跑起来的五步工作法</span><span class="status mono">约 5 分钟</span></summary>
       <article class="article">
 <blockquote>上篇讲了"为什么"——AI落地的关键是翻译，不是技术。这篇讲"怎么做"——把认识落成一套可复制的动作。</blockquote>
@@ -797,6 +846,14 @@
     <div class="contact-pane">
       <p>想聊聊 ForgeOne、CEO LAB，或者别的 AI 想法，欢迎写信给我——不管你是想合作，还是单纯想吐槽这个网站。</p>
       <a class="mail-btn" href="mailto:yuhaozhao531@gmail.com">写邮件给我 ↗</a>
+      <form class="contact-form" data-contact-form hidden novalidate>
+        <p class="mono" style="font-size:.78rem; color:var(--ink-faint); margin:0;">或者直接在这里留言：</p>
+        <label class="cf-field">姓名<input type="text" name="name" required maxlength="100" autocomplete="name"></label>
+        <label class="cf-field">邮箱<input type="email" name="email" required maxlength="200" autocomplete="email"></label>
+        <label class="cf-field">内容<textarea name="message" required maxlength="5000" rows="5"></textarea></label>
+        <button type="submit" class="mail-btn">发送 ↗</button>
+        <p class="cf-status mono" role="status" aria-live="polite"></p>
+      </form>
       <p class="foot-sign">© 2026 Yuhao Zhao · 最近更新 2026.09</p>
     </div>
   </div>
@@ -954,5 +1011,33 @@
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && drawer.classList.contains('on')) closeDrawer(); });
 
   if(state['about']){ ledeStarted=true; renderLedeStatic(); }
+  // ---- contact form: only shown where the Node backend exists (server copy), hidden on GitHub Pages ----
+  var hasBackend = false;
+  fetch('/api/posts', { method:'GET' }).then(function(r){
+    var ct = r.headers.get('content-type') || '';
+    if(r.ok && ct.indexOf('json') !== -1){
+      hasBackend = true;
+      var tpl = document.querySelector('#panes [data-contact-form]');
+      if(tpl) tpl.hidden = false;
+    }
+  }).catch(function(){});
+  drawerBody.addEventListener('submit', function(e){
+    var form = e.target;
+    if(!form.hasAttribute || !form.hasAttribute('data-contact-form')) return;
+    e.preventDefault();
+    if(!hasBackend) return;
+    var status = form.querySelector('.cf-status');
+    var btn = form.querySelector('button[type=submit]');
+    var data = { name: form.name.value.trim(), email: form.email.value.trim(), message: form.message.value.trim() };
+    btn.disabled = true; status.className = 'cf-status mono'; status.textContent = '发送中…';
+    fetch('/api/contact', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(data) })
+      .then(function(r){ return r.json().then(function(b){ return { ok:r.ok, body:b }; }); })
+      .then(function(res){
+        if(res.ok){ status.className = 'cf-status mono ok'; status.textContent = '已收到，谢谢！我会尽快回复。'; form.reset(); }
+        else { status.className = 'cf-status mono err'; status.textContent = (res.body && res.body.error) || '发送失败，请稍后再试或直接写邮件。'; }
+      })
+      .catch(function(){ status.className = 'cf-status mono err'; status.textContent = '网络错误，请稍后再试或直接写邮件。'; })
+      .then(function(){ btn.disabled = false; });
+  });
 })();
 </script>
