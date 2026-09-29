@@ -176,6 +176,27 @@
   .note .date{ flex:0 0 68px; font-family:'JetBrains Mono',monospace; font-size:.74rem; color:var(--ink-faint); }
   .note .title{ flex:1; font-size:.94rem; color:var(--ink); }
   .note .status{ flex:none; font-family:'JetBrains Mono',monospace; font-size:.66rem; color:var(--ink-faint); border:1px dashed var(--line-hi); border-radius:3px; padding:3px 8px; white-space:nowrap; }
+  .note-item{ border-top:1px solid var(--line); }
+  .note-item:first-of-type{ border-top:none; }
+  .note-item > summary.note{ border-top:none; cursor:pointer; list-style:none; }
+  .note-item > summary.note::-webkit-details-marker{ display:none; }
+  .note-item > summary.note:hover .title{ color:var(--ink-bright); }
+  .note-item[open] > summary.note .title{ color:var(--cyan); }
+  .note-item[open] > summary.note .status{ border-style:solid; color:var(--cyan); border-color:var(--cyan-line); }
+  .article{ padding:4px 0 26px; font-size:.93rem; line-height:1.85; color:var(--ink); }
+  .article p{ margin:0 0 14px; }
+  .article b{ color:var(--ink-bright); }
+  .article h3{ font-size:1.02rem; margin:26px 0 10px; color:var(--ink-bright); }
+  .article h4{ font-size:.95rem; margin:20px 0 8px; color:var(--ink-bright); }
+  .article blockquote{ margin:14px 0; font-weight:500; font-size:.92rem; }
+  .article hr{ border:0; border-top:1px dashed var(--line-hi); margin:22px 0; }
+  .article ul, .article ol{ margin:0 0 14px; padding-left:1.3em; }
+  .article li{ margin:4px 0; }
+  .article .tbl{ overflow-x:auto; margin:0 0 16px; }
+  .article table{ border-collapse:collapse; font-size:.8rem; min-width:100%; }
+  .article th, .article td{ border:1px solid var(--line-hi); padding:6px 8px; text-align:left; vertical-align:top; }
+  .article th{ color:var(--ink-bright); background:var(--cyan-dim); }
+  .article .sign{ color:var(--ink-faint); font-style:italic; }
   .note-foot{ margin-top:16px; font-size:.84rem; color:var(--ink-faint); }
 
   .contact-pane p{ font-size:.95rem; color:var(--ink); max-width:44ch; }
@@ -193,7 +214,7 @@
     <span class="dot" aria-hidden="true"></span>
     <span class="hud-sys mono">YUHAO-ZHAO // SYSTEM MAP</span>
     <div class="hud-track"><div class="hud-fill" id="hudFill"></div></div>
-    <span class="hud-count mono" id="hudCount">已探索 0/10</span>
+    <span class="hud-count mono" id="hudCount">已探索 0/12</span>
     <a class="hud-mail mono" href="mailto:yuhaozhao531@gmail.com">TRANSMIT ↗</a>
   </div>
 </div>
@@ -243,25 +264,39 @@
         </button>
       </div>
     </div>
-
-    <div class="orbit-pivot" style="--dur:76s; --delay:0s;">
-      <div class="planet-arm" style="--r:clamp(150px,31vmin,268px);">
-        <button class="planet cat-c" data-key="polaris" style="--dur:76s; --delay:0s;" aria-label="极星 AI 训练营">
+    <div class="orbit-pivot" style="--dur:58s; --delay:-38s;">
+      <div class="planet-arm" style="--r:clamp(112px,23vmin,196px);">
+        <button class="planet cat-b" data-key="sentinel" style="--dur:58s; --delay:-38s;" aria-label="序安 Process Sentinel">
           <span class="planet-dot mono">05</span>
         </button>
       </div>
     </div>
-    <div class="orbit-pivot" style="--dur:76s; --delay:-25.3s;">
+
+    <div class="orbit-pivot" style="--dur:76s; --delay:0s;">
       <div class="planet-arm" style="--r:clamp(150px,31vmin,268px);">
-        <button class="planet cat-c" data-key="direction" style="--dur:76s; --delay:-25.3s;" aria-label="方向探索">
+        <button class="planet cat-c" data-key="polaris" style="--dur:76s; --delay:0s;" aria-label="极星 AI 训练营">
           <span class="planet-dot mono">06</span>
         </button>
       </div>
     </div>
-    <div class="orbit-pivot" style="--dur:76s; --delay:-50.6s;">
+    <div class="orbit-pivot" style="--dur:76s; --delay:-19s;">
       <div class="planet-arm" style="--r:clamp(150px,31vmin,268px);">
-        <button class="planet cat-c" data-key="interview" style="--dur:76s; --delay:-50.6s;" aria-label="模拟面试">
+        <button class="planet cat-c" data-key="direction" style="--dur:76s; --delay:-19s;" aria-label="方向探索">
           <span class="planet-dot mono">07</span>
+        </button>
+      </div>
+    </div>
+    <div class="orbit-pivot" style="--dur:76s; --delay:-38s;">
+      <div class="planet-arm" style="--r:clamp(150px,31vmin,268px);">
+        <button class="planet cat-c" data-key="interview" style="--dur:76s; --delay:-38s;" aria-label="模拟面试">
+          <span class="planet-dot mono">08</span>
+        </button>
+      </div>
+    </div>
+    <div class="orbit-pivot" style="--dur:76s; --delay:-57s;">
+      <div class="planet-arm" style="--r:clamp(150px,31vmin,268px);">
+        <button class="planet cat-c" data-key="her" style="--dur:76s; --delay:-57s;" aria-label="HER">
+          <span class="planet-dot mono">09</span>
         </button>
       </div>
     </div>
@@ -278,7 +313,7 @@
         </button>
         <button class="row" data-key="forgeone">
           <span class="row-id mono">02</span>
-          <span class="row-main"><span class="row-name">ForgeOne</span><span class="row-sub">一人公司 AI 业务基础设施 · 系统开发中</span></span>
+          <span class="row-main"><span class="row-name">ForgeOne</span><span class="row-sub">面向个人创业者的 AI 创业助理 · 已上线</span></span>
           <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
         </button>
         <button class="row" data-key="ceolab">
@@ -294,7 +329,12 @@
       <div class="cat-group">
         <button class="row" data-key="fde">
           <span class="row-id mono">04</span>
-          <span class="row-main"><span class="row-name">AI 企业落地服务</span><span class="row-sub">流程自动化 + 重工业可行性研究 · 对客服务中</span></span>
+          <span class="row-main"><span class="row-name">AI 企业落地服务</span><span class="row-sub">FDE 驻场落地 · 6 个行业案例 · 对客服务中</span></span>
+          <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
+        </button>
+        <button class="row" data-key="sentinel">
+          <span class="row-id mono">05</span>
+          <span class="row-main"><span class="row-name">序安 Process Sentinel</span><span class="row-sub">磷煤化工园区 AI 可行性研究 · 原型可演示</span></span>
           <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
         </button>
       </div>
@@ -304,18 +344,23 @@
       <div class="cat-head"><span class="cat-swatch c"></span><h2>产品实验</h2><span class="cat-note mono">自用原型</span></div>
       <div class="cat-group">
         <button class="row" data-key="polaris">
-          <span class="row-id mono">05</span>
+          <span class="row-id mono">06</span>
           <span class="row-main"><span class="row-name">极星 AI 训练营</span><span class="row-sub">中文版 AI/ML 学习平台 · 已上线</span></span>
           <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
         </button>
         <button class="row" data-key="direction">
-          <span class="row-id mono">06</span>
-          <span class="row-main"><span class="row-name">方向探索</span><span class="row-sub">高考后方向探索工具 · 原型阶段</span></span>
+          <span class="row-id mono">07</span>
+          <span class="row-main"><span class="row-name">方向探索</span><span class="row-sub">高考后方向探索工具 · 已上线</span></span>
           <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
         </button>
         <button class="row" data-key="interview">
-          <span class="row-id mono">07</span>
+          <span class="row-id mono">08</span>
           <span class="row-main"><span class="row-name">模拟面试</span><span class="row-sub">AI 模拟面试工具 · 本地原型</span></span>
+          <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
+        </button>
+        <button class="row" data-key="her">
+          <span class="row-id mono">09</span>
+          <span class="row-main"><span class="row-name">HER</span><span class="row-sub">女性人生故事社区 · 已上线</span></span>
           <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
         </button>
       </div>
@@ -327,7 +372,7 @@
     <div class="cat-group">
       <button class="row" data-key="notes">
         <span class="row-id mono">·</span>
-        <span class="row-main"><span class="row-name">笔记</span><span class="row-sub">3 条标题占位，整理中</span></span>
+        <span class="row-main"><span class="row-name">笔记</span><span class="row-sub">4 篇文章 · 企业 AI 落地</span></span>
         <span class="row-status mono">未探索</span><span class="row-go mono">→</span>
       </button>
       <button class="row" data-key="contact">
@@ -374,11 +419,10 @@
 
   <div data-key="forgeone" data-title="ForgeOne" data-n="核心产品线 · 02">
     <div class="proj-detail">
-      <span class="stage mono">系统开发中</span>
+      <span class="stage mono">已上线</span>
       <p>一人公司的 AI 业务基础设施：主控 AI 拆解商业任务，并行调度子 Agent 完成设计、生产、销售全链路，用决策卡片、成本账本和 Trust Score 把每一步的进度、花费和证据都摊开给你看。目前已经跑通数字产品、内容型业务、预售型项目三类首发场景的完整闭环，后端 170+ 项自动化测试通过，正准备 Light 创造营路演。</p>
       <div class="tags"><span>多智能体</span><span>成本账本</span><span>DeepResearch</span></div>
-      <a class="demo-link" href="https://kentucky-territories-harper-youth.trycloudflare.com/" target="_blank" rel="noopener">查看演示 ↗</a>
-      <p class="demo-note">临时开发环境（Cloudflare Tunnel），链接可能会过期或变化</p>
+      <a class="demo-link" href="http://www.forgeone.asia" target="_blank" rel="noopener">访问 ForgeOne ↗</a>
     </div>
   </div>
 
@@ -393,14 +437,63 @@
   <div data-key="fde" data-title="AI 企业落地服务" data-n="企业咨询 · 04">
     <div class="proj-detail">
       <span class="stage mono">对客服务中</span>
-      <p>以「AI 流程架构师」的身份接的落地项目，把 AI 用进具体的企业流程：给一家药店把出入库从拍照记录改成自动生成台账，从半小时缩短到几分钟；帮一家国企把口口相传的调薪、停发规则整理成系统化流程；用自研的 ForgeOne 串联数据提取、风控、报告生成，做多智能体审批流程。也接涉密内网部署的项目——给贵州一个磷煤化工园区做的重工业可行性研究"序安 Process Sentinel"，两个原型（渗滤液早期预警、以渣定产仿真）目前基于模拟数据，还没接真实传感器。</p>
-      <div class="tags"><span>流程自动化</span><span>多智能体</span><span>对客咨询</span></div>
-      <a class="demo-link" href="http://47.107.29.95:3080" target="_blank" rel="noopener">序安 Process Sentinel 演示 ↗</a>
-      <p class="proj-contact mono">合作联系：18082950989（微信同号）· 内容号"小鱼在创业"</p>
+      <div class="article">
+        <blockquote>把业务，翻译成在跑的系统。</blockquote>
+        <p>以 FDE（Forward Deployed Engineer，前线部署工程师）的方式做企业 AI 落地：驻场进客户的群、数据和流程里，亲自写代码，交付在业务里跑起来的系统，而不是报告和 PPT。麦肯锡的调研里，88% 的企业已经在用 AI，但约三分之二还停在零散试点——差距不在工具，在运营方式。我做的，是把 AI 原生企业的运营准则翻译进传统企业。</p>
+
+        <h3>和卖工具、做咨询有什么不同</h3>
+        <div class="tbl"><table>
+          <tr><th></th><th>卖工具 / SaaS</th><th>传统咨询</th><th>FDE 模式</th></tr>
+          <tr><td>交付物</td><td>账号和功能</td><td>报告与 PPT</td><td><b>在业务里跑起来的系统</b></td></tr>
+          <tr><td>谁写代码</td><td>客户自己配置</td><td>外包或不写</td><td><b>驻场工程师亲自写</b></td></tr>
+          <tr><td>成功标准</td><td>用户数、续费</td><td>方案通过评审</td><td><b>开工前共同定义的业务指标</b></td></tr>
+        </table></div>
+
+        <h3>五步工作法</h3>
+        <ol>
+          <li><b>跟岗观察</b>：看员工每天忙什么、卡在哪、重复什么 → 现场观察记录</li>
+          <li><b>痛点定位</b>：只挑同时「繁琐、高频、易错」的环节 → 痛点清单 + 成功标准</li>
+          <li><b>流程拆解</b>：每一步的输入、输出、异常都写清楚 → 流程图 + 数据字典</li>
+          <li><b>翻译封装</b>：写成规则、脚本和 Agent 动作链，开发成系统 → 可运行系统 + 测试</li>
+          <li><b>赋能输出</b>：先带会 3–5 名种子用户，再由他们带团队 → 手册 + 教学视频</li>
+        </ol>
+
+        <h3>先划清谁做什么，AI 才敢进核心业务</h3>
+        <p><b>确定性自动化</b>（脚本与规则引擎：搬运、匹配、计算、留痕）→ <b>AI 辅助</b>（识别、归类、起草，只出候选）→ <b>人工判断</b>（风险判断、最终结论，永远不自动化）。AI 的自主度按 L0–L3 分级，平行运行达标才升一级，出错即降级。</p>
+
+        <h3>六个案例</h3>
+        <div class="tbl"><table>
+          <tr><th>案例</th><th>业务面</th><th>当前进展</th></tr>
+          <tr><td>A 曼谷某审计事务所</td><td>风险导向审计 P1–P6</td><td>实质性程序底稿链路已跑通（规则引擎 + 质量闸门 + 运行留痕，数据不出本机）；下一步真实数据平行运行，再接本地部署 AI 候选层</td></tr>
+          <tr><td>B 某国企人事部门</td><td>人事全域</td><td>一期已交付：隐性薪资规则显性化；二期设计中：在原有 SaaS 上加治理网关 + 人事 Agent，钱只走规则引擎，发薪前人工审批</td></tr>
+          <tr><td>C 教培学管</td><td>学情诊断与学习规划</td><td>搭建中：错题照片 → 知识点 → 规划 Agent → 学生知识地图，不确定的进学管队列</td></tr>
+          <tr><td>D 制造业物流</td><td>订单到回款履约</td><td>诊断阶段：一个岗位靠电话串起的 9 个环节已拆清，方案是事件驱动的状态机，控货放货保留人工门</td></tr>
+          <tr><td>E 个体药店</td><td>单店经营</td><td>已交付：拍照入库 + 台账，每天半小时 → 几分钟；下一步效期预警与补货</td></tr>
+          <tr><td>F 化工园区</td><td>安全生产与物料平衡</td><td>原型可演示，只读不写，见 05「序安 Process Sentinel」</td></tr>
+        </table></div>
+        <p class="sign">每个案例都如实标注进度：已交付 · 原型 / 进行中 · 设计中 · 规划。多环节流程的编排底座用的是自研的 ForgeOne（决策门、检查点回滚、三层预算守卫）。</p>
+
+        <h3>合作方式</h3>
+        <p>从一条业务线开始，验收通过再扩展：现场诊断 → 最小可用自动化 → 平行运行验收 → 带教交付。可以企业直接合作（驻场端到端负责一条业务线）、联合交付（合作方保留客户关系，我进场落地），或做方法论培训。</p>
+        <blockquote>先去现场，再写代码。给我一条最让团队头疼的业务线，从跟岗第一天开始。</blockquote>
+      </div>
+      <div class="tags"><span>FDE</span><span>流程自动化</span><span>多智能体</span><span>数据治理</span></div>
+      <p class="proj-contact mono">合作联系：18082950989（微信同号）· yuhaozhao531@gmail.com · 内容号"小鱼在创业"</p>
     </div>
   </div>
 
-  <div data-key="polaris" data-title="极星 AI 训练营" data-n="产品实验 · 05">
+  <div data-key="sentinel" data-title="序安 Process Sentinel" data-n="企业咨询 · 05">
+    <div class="proj-detail">
+      <span class="stage mono">原型可演示</span>
+      <p>给贵阳息烽磷煤化工园区做的 AI 应用可行性研究——一个磷、煤、电、固废深度耦合的重工业系统。先把园区规划环评、生态环境局通报、省级政策文件这些一手资料查扎实，再谈技术怎么落地；定位是<b>只读采集、不接管 DCS 生产控制</b>，所有预测、预警、仿真结果只给工艺工程师做参考。</p>
+      <p style="margin-top:10px;">六个场景里已经做出四个可运行原型：「以渣定产」物料平衡仿真（按报告化学计量比做规则计算）、交椅山磷石膏渣库渗滤液早期预警、浮选滞后预测和磷酸铁沉淀两项方法论验证。另外两个工段没有可用的真实数据，先留白，等园区真实数据和授权到位。每个场景都在界面上写明了数据来源——渣库预警用的是依据真实事件时间线构造的合成示意数据，方法论验证用的是公开数据集，都不是息烽园区的真实数据。</p>
+      <div class="tags"><span>重工业</span><span>可行性研究</span><span>只读辅助</span><span>Next.js + FastAPI</span></div>
+      <a class="demo-link" href="http://47.107.29.95:3080" target="_blank" rel="noopener">查看演示 ↗</a>
+      <p class="demo-note">完整方法论见「笔记」里的《序安 Process Sentinel：重工业场景的 AI 可行性研究方法论》</p>
+    </div>
+  </div>
+
+  <div data-key="polaris" data-title="极星 AI 训练营" data-n="产品实验 · 06">
     <div class="proj-detail">
       <span class="stage mono">已上线</span>
       <p>复刻自 Polaris ML/AI Training 的中文版 AI/ML 学习平台：7 个训练营、25 个实战项目、13 个学习主题，覆盖机器学习基础到 AI 智能体，还做了账号系统和定价页。前端 React + Vite + Tailwind，后端 Express + JWT，账号和学习进度持久化在 Postgres。</p>
@@ -410,15 +503,16 @@
     </div>
   </div>
 
-  <div data-key="direction" data-title="方向探索" data-n="产品实验 · 06">
+  <div data-key="direction" data-title="方向探索" data-n="产品实验 · 07">
     <div class="proj-detail">
-      <span class="stage mono">原型阶段</span>
-      <p>写给刚考完高考的大一新生：不是 MBTI 测试，不给你贴标签，而是把专业、城市、大学四年怎么过这些问题一步步问清楚，最后生成一份方向分析报告。用的是 DeepSeek API，Key 只存在你自己浏览器里。目前是单文件原型，还没正式上线。</p>
-      <div class="tags"><span>DeepSeek</span><span>生涯规划</span><span>原型</span></div>
+      <span class="stage mono">已上线</span>
+      <p>写给刚考完高考的大一新生：不是 MBTI 测试，不给你贴标签，而是把专业、城市、大学四年怎么过这些问题一步步问清楚，最后生成一份方向分析报告。用的是 DeepSeek API，Key 只存在你自己浏览器里。单文件网页，打开就能用。</p>
+      <div class="tags"><span>DeepSeek</span><span>生涯规划</span><span>已上线</span></div>
+      <a class="demo-link" href="https://yuhaozhao531-oss.github.io/gaokao-direction/" target="_blank" rel="noopener">打开工具 ↗</a>
     </div>
   </div>
 
-  <div data-key="interview" data-title="模拟面试" data-n="产品实验 · 07">
+  <div data-key="interview" data-title="模拟面试" data-n="产品实验 · 08">
     <div class="proj-detail">
       <span class="stage mono">本地原型</span>
       <p>从一个粘贴材料就能生成结构化面试题的轻量工具，迭代成了多用户平台：账号系统、简历解析、结构化 / 半结构化 / 压力面试三种模式、五维度打分报告。数字人面试官还在实验——语音合成链路已经用真实调用跑通，但视频画面渲染没做完，启用后暂时只有声音、看不到人。</p>
@@ -426,13 +520,277 @@
     </div>
   </div>
 
-  <div data-key="notes" data-title="笔记" data-n="LOG">
-    <div class="note" style="border-top:none; padding-top:0;">
-      <span class="date mono">2026.08</span><span class="title">问题解决不是线性过程，而是不断试错的循环</span><span class="status mono">整理中</span>
+  <div data-key="her" data-title="HER" data-n="产品实验 · 09">
+    <div class="proj-detail">
+      <span class="stage mono">已上线</span>
+      <p>「每一种人生，都值得被看见」——一个记录女性人生选择的故事社区：全职妈妈、创业者、转行者、照顾者、退休再出发……不评判哪条路更好，只让更多人看见人生原来有这么多种走法。有故事投稿、按人生路径浏览、感悟、讨论区和求助墙，投稿经后台审核后发布。前端纯静态页，后端 Node.js，部署在自己的云服务器上。</p>
+      <div class="tags"><span>内容社区</span><span>投稿审核</span><span>已上线</span></div>
+      <a class="demo-link" href="http://47.107.29.95:8090/" target="_blank" rel="noopener">查看网站 ↗</a>
     </div>
-    <div class="note"><span class="date mono">2026.06</span><span class="title">分工应该由"解决问题的需要"产生，而不是提前指定</span><span class="status mono">整理中</span></div>
-    <div class="note"><span class="date mono">2026.04</span><span class="title">从网站到小程序：验证一个校园需求要多久</span><span class="status mono">整理中</span></div>
-    <p class="note-foot mono">全文整理中，先留标题占位。</p>
+  </div>
+
+  <div data-key="notes" data-title="笔记" data-n="LOG">
+    <p class="note-foot mono" style="margin:0 0 10px;">点标题展开全文 ↓</p>
+    <details class="note-item">
+      <summary class="note"><span class="date mono">2026.09</span><span class="title">从数字员工到数字组织：读完麦肯锡的七条 AI 真相，我给自己提了四个问题</span><span class="status mono">约 8 分钟</span></summary>
+      <article class="article">
+<blockquote>麦肯锡访谈了 15 家 AI 原生公司，总结出七条运营真相。我没打算一条条复述（报告写得比我清楚），而是把它和自己这两年驻场做 AI 落地的笔记摊在一起读。最后留下四个问题：增量在哪，SaaS 死没死，中层何去何从，个人靠什么不被取代。</blockquote>
+<h3>01 数字员工会把组织变成什么样？</h3>
+<p>麦肯锡的第一条真相是：AI 不是工具，是队友。</p>
+<p>报告里有个画面很具体。一家 A 轮公司的 CEO 有一整套私人 agent：一个回邮件、排日程；一个录会议，会后自动把下一步发给相关的人；一个盯着数据看板，实时给他分析。他说自己的产能翻了五倍。</p>
+<p>还有更夸张的。一个顾问以前同时跟 50 单交易，现在能跑 3000 单。人没有多招 60 倍，多出来的量全是 agent 分析师在扛，人只负责那些高风险、要靠信任谈下来的关键对话。另一家 4 个人的可持续发展创业公司，同时服务 20 家企业客户，一份合规报告几分钟出完，以前律所要做好几周。</p>
+<p>以前我们说"数字员工"，脑子里想的是用 AI 替掉某个岗位。但这些案例里发生的事不太一样：是一个人带着一支 agent 小队，去干以前一整个团队才干得了的活。这已经不是多了一个员工，而是多了一个"数字组织"。</p>
+<p>（后面我说的 agent、数字员工，指的都是同一个东西，就是能自己接活、干活的 AI。）</p>
+<p>这不是效率提升，这是另一种商业模式。</p>
+<p>但让我卡住的，是麦肯锡提到的"结构性依赖"。交给 agent 的事越来越多，组织就会慢慢围着 agent 重建。人碰这些活的机会越来越少，经验和判断力一点点流失。等哪天 agent 出错，或者遇到它没见过的情况，已经没人接得住了。</p>
+<p>一家农业科技公司的 CEO 问了一个我很喜欢的问题：我们把越来越多的事交给 agent，是不是正在制造一些自己还看不见的危机？</p>
+<p>他们的解法不是少用 AI，而是刻意设计人的位置：把人放到 agent 真搞不定的地方，比如全新的科学判断、合作伙伴关系；同时给 agent 留好一条"搞不定就交回给人"的通道。</p>
+<p>所以数字组织不是"人越来越少"，而是得想清楚，人到底该站在哪儿。</p>
+<h3>02 增量在哪？SaaS 死了吗？</h3>
+<p>这一节其实是我读的时候在笔记本上连着打的几个问号：增量到底怎么算？SaaS 还有没有未来？</p>
+<p>先说增量。</p>
+<p>我见过的很多老板，一提 AI 第一反应是降本，能不能少招两个人。这没错，但如果只停在这一步，AI 带来的就只是存量里的内卷：同样的客户、同样的单子，只是做得更便宜。</p>
+<p>麦肯锡给了一个我觉得特别关键的标准：别再问 AI 帮你省了多少小时，要问有了 AI，你的业务现在敢试什么以前想都不敢想的事。</p>
+<p>这点我自己深有体会。我现在给客户定指标，已经不算"省了多少时间"了，而是算"同样的人手，现在能多接住多少活"。前者的尽头是裁员，后者的尽头才是增长。（老板们一开始都更爱听前者，这个我理解。）</p>
+<p>我的理解是：用 AI 去探索业务的边界，也在业务里探索 AI 的边界。</p>
+<p>50 单到 3000 单，4 个人服务 20 家企业，这些才叫增量。对中小企业来说，与其让 agent 去替现有岗位，不如派它去做以前根本够不着的事：长尾客户、边缘市场、以前因为太费人而放弃的业务。</p>
+<p>再说 SaaS。</p>
+<p>报告里那位农业科技公司的首席战略官说了句很冲的话：SaaS 已死，集成一个工具花的时间，比自己造一个还长。有了 Claude Code、Cursor 这类工具，懂技术的团队几个小时就能搭出一个内部工具。</p>
+<p>但麦肯锡自己在后面泼了盆冷水：造一个工具现在很便宜，养一个工具一点都不便宜。每个部门都自己搭一堆小工具，维护的账单迟早会来。</p>
+<p>它给的判断标准挺清楚：</p>
+<ul><li>能让你与众不同的东西，也就是基于你自己的数据、经验、知识产权的，自己做；</li></ul>
+<ul><li>其他的先买现成的，但有三条硬要求：AI 原生的接口、能和别的系统打通、能随时换掉。</li></ul>
+<p>所以我觉得，SaaS 没死，死的是"买一套大而全、把你锁死的系统"这种买法。以后的软件更像一块块积木，agent 随时能调用，不好用就拔掉换一块。麦肯锡管这叫"为替换而设计"：底下是很薄的一层治理（身份、权限、安全），上面插各家最好的工具，连模型都要能随时换。</p>
+<p>我在笔记上画了一条路径：</p>
+<blockquote>降本增效（助手放大）→ 内部工具（自动执行）→ 增长引擎（业务增量）</blockquote>
+<p>大多数公司，还停在第一格。</p>
+<h3>03 中层怎么办？我的"1+1+1+3"</h3>
+<p>麦肯锡的第六条真相是：平台集中管，任务分散做。</p>
+<p>意思是，没有哪个中央 AI 部门能一个人推动整个公司转型。一位负责 AI 运营的总监，一上来就跟自己说"我不是专家"，因为一个人不可能搞懂所有部门的业务。更好的做法是：技术团队把底座搭好、把安全管住，每个业务部门自己决定 AI 怎么用。</p>
+<p>还有个数据挺扎心：员工说 AI 帮自己干了三成以上日常工作的比例，是老板以为的三倍。卡住规模化的往往不是员工不愿意用，而是领导放权太慢。</p>
+<p>读到这里，我在笔记上写下了"1+1+1+3"：一个最小作战单元里，1 个高层、1 个中层、1 个员工，再加 3 个数字员工。</p>
+<p>高层要先做一件事：给决策分类。</p>
+<p>这里有个"杰文斯悖论"：一样东西变便宜了，大家反而会用得更多。决策也是这样。AI 把每次决策的成本打下来，要做的决策就会暴增。如果高层不先分清楚哪些交给流程和 agent、哪些必须自己拍板，最后只会被淹死在一堆"要不要"里。</p>
+<p>中层要变成"内部 FDE"。</p>
+<p>FDE 是 Forward Deployed Engineer，前线部署工程师，原本指那种驻扎在客户现场、懂业务、又能直接写代码交付的工程师（对，就是我平时在干的活）。放到公司内部，就是那个懂业务痛点、会调 agent、能直接把工作流搭出来的人。中层作为内部 FDE，负责定方向、定边界、担结果：哪些流程值得重做，哪里让 agent 自己跑，哪里必须留给人。</p>
+<p>员工里也要有 FDE：一个人带三个数字员工，负责把东西搭出来、养下去，也负责把一线冒出来的新机会往上提。</p>
+<p>两者都得会动手，区别只在于谁做决定、谁对结果负责。</p>
+<p>这里要补一句麦肯锡的提醒，它和"1+1+1+3"是同一件事的另一面：信任先于自主。</p>
+<p>报告里有个差点翻车的故事。一家公司让 AI 帮忙回合同邮件，AI 很快起草了一封"改动都没问题，就这么办"，但那些条款其实还得接着谈。好在发出去之前被人拦下了，他们立刻关掉了这个功能。还有一位创始人说得很实在：先手动做，做到痛得受不了再自动化，而且一步一步来。AI 最适合做中间，开头和结尾还得是人。</p>
+<p>这条我在项目里是真的这么干的。之前给一家审计事务所做底稿自动化，我们的设计就是：模型部署在他们本地，AI 只给候选结果，人来确认。我把 agent 的自主程度分成 L0 到 L3 四级，一开始只让它待在最低的那一级跑，跑稳了、大家信它了，再往上放。</p>
+<p>所以内部 FDE 不只是会搭，更重要的是知道哪里不能让 agent 自己做主。</p>
+<h3>04 个人靠什么不被取代？</h3>
+<p>麦肯锡的第三条真相，是我读完觉得最实在的一条：瓶颈不在模型，而在于能不能调得动你的"部落知识"。</p>
+<p>部落知识，就是那些只存在于人脑子里、从来没写下来的经验。你问 agent 一个问题它答不上来，很多时候不是模型不够聪明，而是答案根本没被记下来，或者放在它够不着的地方。有位受访者说：这不是 AI 问题，是知识管理问题，AI 只是把它暴露了出来。</p>
+<p>所以我越来越觉得，未来手里无形资产、知识资产越多的人，越不容易被 AI 取代。</p>
+<p>能写成流程的工作，比如整理纪要、做标准表格、写模板化回复，正在快速贬值，因为 agent 学得会。但那些写不成流程的东西，比如对一个行业的判断、和客户之间的信任、面对复杂局面时的直觉，才是护城河。</p>
+<p>不过光有积累还不够。麦肯锡建议企业把会议全录下来、自动转写、放进共享知识层。放到个人身上也一样：你得学会把自己的经验整理好，"喂"给 agent。知识资产越厚、越有条理，AI 在你手里的杠杆就越大。</p>
+<p>这也是我自己在做的事。</p>
+<p>我有一个四千多个文件的个人知识库。第一版是 7 月搭的 RAG，一次性把所有资料提取进去，刚做好的时候真的很好用，问什么都能翻出来。后来我才意识到，它只是一张快照：之后我改过的方案、推翻的判断，它全不知道，却会用一模一样笃定的语气，把两个月前的旧结论当成答案递给我。</p>
+<p>这就是报告里说的"知识腐烂"。可怕的不是资料旧了，而是 AI 不会告诉你它旧了。</p>
+<p>所以 9 月我重新搭了一套。不再追求一次塞满，而是让它自己能动起来：按项目、领域、资源、归档分层；写了个脚本自动扫描全库、重建索引；每周一定时跑一次，哪些东西放太久没更新，它会直接点名。（比如我的增长实验日志超过七天没动，它就会提醒我。被自己搭的系统催更，体验挺微妙的。）</p>
+<p>我现在觉得，知识库不是仓库，而是一个需要新陈代谢的系统。</p>
+<p>最后想留一点怀疑。</p>
+<p>15 家公司，样本不大；而且都是已经做成了的 AI 原生公司，天然偏乐观；受访者大多是高管，讲的也多是正面经验；这篇报告本身也在推麦肯锡自己的方法论。所以我把它当成一份很好的清单，而不是定律。</p>
+<p>但有两句话，我会一直记着。</p>
+<p>一句是麦肯锡的：别问 AI 帮你省了多少钱，要问有了 AI，你的团队现在敢尝试什么。</p>
+<p>另一句是那位农业科技 CEO 的，大意是：人机协作的重点不在用 AI 替代人，而在精准地找到人不可替代的地方。</p>
+<p>对组织来说，这是在找人该站的位置。</p>
+<p>对我们每个人来说，这是在问自己：我那份写不成流程的东西，到底是什么？</p>
+      </article>
+    </details>
+    <details class="note-item">
+      <summary class="note"><span class="date mono">2026.09</span><span class="title">序安 Process Sentinel：重工业场景的 AI 可行性研究方法论</span><span class="status mono">约 4 分钟</span></summary>
+      <article class="article">
+<h3>为什么高风险行业需要不一样的方法论</h3>
+<p>前面几篇案例文章里的场景——药店、国企 HR、企业审批——共同点是错了可以改、慢一点也没关系。但重工业、能源这类场景不一样：一次误判可能是安全事故，一次错误的自动化决策可能牵扯到环保合规甚至政策红线。</p>
+<p>序安（Process Sentinel）是一个面向重工业高风险场景的 AI 应用可行性研究与原型验证项目，研究对象是贵阳息烽磷煤化工园区——一个磷、煤、电、固废深度耦合的复杂工业系统。这个案例展示的不是"我们上了什么模型"，而是<b>在高风险、高监管行业里做方案该有的方法论</b>：先把一手资料查扎实，再谈技术怎么落地。</p>
+<h3>研究方法：先查证，再设计</h3>
+<p>这类项目最容易犯的错误，是拿着一套通用的"AI+工业"话术直接套上去，缺乏对具体工艺流程和监管背景的扎实理解。序安的方案基于一批可核查的一手资料——园区总体规划环评报告书、贵阳市生态环境局的公开通报、贵州省的政策文件（黔府发〔2024〕5 号）、公开发表的技术文献——完整梳理了工艺流程与物料流向，而不是从二手资料或通用行业知识出发拍脑袋。</p>
+<p>这一步看起来"不够技术"，却是整个方案能不能落地的前提——脱离真实工艺流程和真实监管约束谈 AI 应用，做出来的方案大概率是空中楼阁。</p>
+<h3>识别出的三处现实短板</h3>
+<p>基于扎实的资料梳理，研究识别出园区当前存在的三处现实短板：</p>
+<div class="tbl"><table><tr><th>现实短板</th><th>具体表现</th></tr><tr><td>质量指标滞后</td><td>湿法磷酸、磷酸铁等工段的关键质量指标依赖人工离线化验，与实际工况存在时间差，异常征兆难以提前识别</td></tr><tr><td>渣库风险事后发现</td><td>磷石膏渣库渗滤液风险长期是"泄漏后才监测到"的事后模式，2017 年环保督查、2023 年官方通报均指向同一短板，缺少 7×24 小时前置预警能力</td></tr><tr><td>"以渣定产"推演不足</td><td>生产规模受磷石膏消纳能力政策约束（黔府发〔2024〕5 号），但多装置联动推演依赖人工 Excel 物料衡算，效率不足</td></tr></table></div>
+<p>三个短板的共性是：都不是"没有数据"的问题，而是"数据没有被及时用起来"的问题——化验数据存在，但滞后；渣库有监测，但是事后的；物料衡算能算，但靠人工 Excel，跟不上多装置联动的复杂度。这正是 AI 系统能补的位置。</p>
+<h3>方案定位：只读辅助，不接管生产</h3>
+<p>在高监管、高风险场景里，方案设计上最重要的一条原则，是明确边界：提出的 AI 系统<b>严格只读采集</b> DCS 与传感器数据，不向生产控制系统下发任何指令，不接管生产。预测、预警、仿真结果，只作为工艺工程师与操作人员的参考建议，而不是自动执行的决策。</p>
+<p>这不是技术上的保守，而是这类场景应有的责任边界——生产控制系统的自动化决策一旦出错，后果不是"重新跑一次"能解决的。</p>
+<p>实施路径按风险从低到高分三个阶段：</p>
+<ol><li><b>阶段一：离线验证</b>——仅用归档历史数据训练，不接触现场系统，风险最低。</li><li><b>阶段二：在线只读测试</b>——本方案建议的重点阶段，系统只输出结果，不写回任何控制指令。</li><li><b>阶段三：人工辅助建议</b>——远期阶段，不建议在当前阶段开展自动闭环。</li></ol>
+<p>这种分阶段推进本身就是方法论的一部分：不是因为技术做不到闭环，而是在没有充分验证之前，闭环的风险大于收益。</p>
+<h3>原型进展：说清楚"是什么"和"不是什么"</h3>
+<p>六个应用场景里，已经做成可运行原型的有两个：</p>
+<ul><li><b>交椅山磷石膏渣库渗滤液早期预警</b>：用 180 天合成示意时序数据验证"先导指标能否早于污染物超标提前预警"这一假设，一次固定随机种子的结果是提前 44 天预警。</li><li><b>"以渣定产"园区物料平衡仿真</b>：按消纳上限推演多装置可行负荷组合，把原本靠人工 Excel 完成的联动推演自动化。</li></ul>
+<p>两个原型都通过独立 API 与前端页面展示，但有一点在方案里被反复强调、如实说明：<b>数据来源明确标注为合成示意数据，不冒充真实传感器数据</b>。其余四个工段场景与真实视频接入，需要等现场数据与授权到位之后再开展——这一点同样在方案里如实写明，而不是模糊处理成"即将上线"。</p>
+<p>这种诚实，在这类项目里本身就是专业性的一部分——尤其是面对政府、国企客户时，夸大原型的真实程度，短期可能换来签约，长期一定会反噬信任。</p>
+<h3>合作方式：不预设唯一模式</h3>
+<p>针对这类专业性要求高的重工业场景，合作框架设计上留了几种可探讨的模式，具体分工根据合作方的客户资源与业务定位进一步商定：</p>
+<div class="tbl"><table><tr><th>合作模式</th><th>适合的合作方</th><th>大致分工</th></tr><tr><td>渠道推荐</td><td>行业协会、财税/法务顾问、企业服务机构</td><td>合作方推荐有需求的企业客户，我方负责需求梳理与技术交付，按约定方式分润</td></tr><tr><td>联合交付</td><td>已有客户关系但缺 AI 落地能力的服务商</td><td>合作方保留客户关系与项目管理，我方以"AI 流程架构师"角色进场做落地</td></tr><tr><td>方法论/培训输出</td><td>企业内部数字化团队、培训机构</td><td>将五步工作法与案例经验转化为培训内容，帮助合作方团队具备自主落地能力</td></tr></table></div>
+<h3>写在最后</h3>
+<p>序安这个案例，价值不在于"做了两个原型"，而在于展示了一套面对高风险行业该有的工作方式：<b>先把一手资料查扎实，再谈技术怎么落地；方案边界写清楚，原型的真实程度不夸大；分阶段推进，把风险控制放在效率之前。</b></p>
+<p>这套方法论本身，其实也是"把业务翻译成 AI 能执行的工作流"这句话在高风险场景下的具体展开——只是这里的"业务"，多了一层监管约束和安全红线，翻译的难度和责任都更高。</p>
+      </article>
+    </details>
+    <details class="note-item">
+      <summary class="note"><span class="date mono">2026.08</span><span class="title">企业 AI 落地（2）：一套能让 AI 真正跑起来的五步工作法</span><span class="status mono">约 5 分钟</span></summary>
+      <article class="article">
+<blockquote>上篇讲了"为什么"——AI落地的关键是翻译，不是技术。这篇讲"怎么做"——把认识落成一套可复制的动作。</blockquote>
+<hr>
+<h3>开场：认识和方法之间，差一个"怎么做"</h3>
+<p>如果你已经读懂了上篇的认知——翻译比使用重要、设计比操作重要、赋能比替代重要——那接下来的问题是：</p>
+<p><b>具体怎么干？</b></p>
+<p>这篇给你一套完整可执行的方法。它不是理论，是我做了药店出入库、国企人事系统、保密数据系统、多智能体协作这些项目后，沉淀下来的固定打法。照着走，至少能让这件事"知道第一步做什么"。</p>
+<hr>
+<h3>一套可复制的工作方法</h3>
+<p>我做每一个项目，基本都走同样的五步：</p>
+<div class="tbl"><table><tr><th>步骤</th><th>动作</th><th>需要的能力</th></tr><tr><td>1. 跟岗观察</td><td>去看同事每天在忙什么、卡在哪、重复什么</td><td>业务敏感度</td></tr><tr><td>2. 痛点定位</td><td>找到那个"繁琐、高频、易错"的环节</td><td>抽象能力</td></tr><tr><td>3. 流程拆解</td><td>把模糊的"记单子"拆成"拍照→识别→填表"</td><td>逻辑拆解力</td></tr><tr><td>4. 翻译封装</td><td>拆成AI动作链 + 写触发规则 + 写操作文档</td><td>翻译能力（最核心）</td></tr><tr><td>5. 赋能输出</td><td>教会同事 + 形成案例 + 对外分享</td><td>传播与复制能力</td></tr></table></div>
+<p>下面逐步拆开讲。</p>
+<h4>第1步：跟岗观察——先别急着谈AI</h4>
+<p>很多项目一上来就聊工具、聊AI能干什么。这是错的。</p>
+<p>正确的做法是先闭嘴，去看。坐在同事旁边，看他们每天到底在忙什么、卡在哪、哪些事反复在做。<b>AI介入的前提，是你先真的搞懂这份工作。</b></p>
+<h4>第2步：痛点定位——找到那件"繁琐、高频、易错"的事</h4>
+<p>不是所有环节都值得上AI。真正值得做的，是同时满足三个特征的事：</p>
+<ul><li><b>繁琐</b>：步骤多、重复、机械；</li><li><b>高频</b>：每天都在发生，而不是一年几次；</li><li><b>易错</b>：靠人容易漏、容易错。</li></ul>
+<p>药店老板的出入库符合这三条；国企的薪资核算符合这三条。找到这样的环节，AI的价值才是实的。</p>
+<h4>第3步：流程拆解——把模糊的"记单子"拆成清晰的步骤</h4>
+<p>客户描述工作时是模糊的——"我就是记单子"。你不能拿这句话去配AI，得把它拆开：</p>
+<p>"记单子" → 拍照 → 识别商品 → 填数量 → 生成台账 → 人工核对 → 归档</p>
+<p>拆到这一步，AI插在哪、人做什么、哪些能自动化，一目了然。<b>这一步最考验逻辑拆解力，也是后面所有工作的地基。</b></p>
+<h4>第4步：翻译封装——整篇方法的核心</h4>
+<p>这是我说的"翻译"真正落地的地方。把拆好的流程，翻成三样东西：</p>
+<ol><li><b>AI动作链</b>：每一步AI具体做什么、输入输出是什么；</li><li><b>触发规则</b>：什么情况启动、什么情况停止、什么情况回退；</li><li><b>操作文档</b>：员工照着就能用的指南，不用动脑。</li></ol>
+<p>这一步最难复制、也最值钱。前面的观察、定位、拆解，都是为它做铺垫；后面的赋能，只是把它交付出去。</p>
+<h4>第5步：赋能输出——让同事真的用起来</h4>
+<p>系统做完了，员工不会用，等于白做。</p>
+<p>不是开一场培训会就完事，而是先找3-5个"种子用户"——业务熟练、对新工具有好奇心的人——手把手教会。等他们用出效果，再由他们带动其他人。</p>
+<p><b>培训不是教功能，是教"什么时候该想到用AI"。功能会忘，但思维方式不会。</b></p>
+<hr>
+<h3>怎么找到适合自己企业的第一个场景</h3>
+<p>回到最开始的问题：企业不知道从哪里开始。</p>
+<p>我的经验是，与其想清楚再动手，不如先找一个足够痛的场景，快速跑起来，看到效果之后自然知道下一步。</p>
+<p><b>适合第一批落地的场景，通常同时满足三个条件：</b></p>
+<ol><li><b>业务痛点足够疼</b>：员工主动提需求，而不是领导强推。</li><li><b>数据基础过得去</b>：不需要大动干戈做数据清洗，现有资料和流程已经可以支撑。</li><li><b>风险边界清晰</b>：即使出错，也在可控范围内，有人能兜底。</li></ol>
+<p>按这三个条件过滤，我从上百个场景中筛出了几个优先级最高的：</p>
+<h4>场景一：知识问答</h4>
+<p>企业制度、产品资料、技术文档分散在各个角落，员工遇到问题时，查找耗时，还难以判断资料是否准确、是否为最新版本。</p>
+<p><b>做法</b>：不是推荐一套知识库系统，而是先和客户一起梳理——哪些文档是最常用的、哪些问题是被问得最多的。然后用最简单的方式搭起来，跑起来，再迭代。</p>
+<h4>场景二：采购信息汇总</h4>
+<p>采购人员寻找新供应商时，需要在多个平台反复搜索，耗费时间，也容易错过更合适的供应资源。</p>
+<p><b>做法</b>：不是上一个智能采购系统，而是先帮采购人员梳理：他们现在怎么找供应商、哪些步骤最费时间、有哪些信息是可以自动汇总的。从一个具体的小环节切入，而不是整体替换。</p>
+<h4>场景三：合同审查</h4>
+<p>合同量大、条款复杂，人工审查耗时且容易遗漏风险。</p>
+<p><b>做法</b>：不是上一个AI法务平台，而是先帮法务人员梳理：他们最怕哪种类型的风险、最常审哪种类型的合同、审一份合同最费时间的环节在哪里。从最痛的那个点开始。</p>
+<h4>场景四：财务发票核对</h4>
+<p>财务人员需要人工识别发票内容、核对报销单据，工作重复、数据量大，容易积压和差错。</p>
+<p><b>做法</b>：不是上一个RPA系统，而是先和财务一起梳理：发票核对的完整流程是什么、哪些步骤是机械重复的、哪些环节需要人工判断。从机械重复的那几步开始。</p>
+<hr>
+<h3>一套简单的评估方法</h3>
+<p>如果你的企业想系统地评估哪些场景值得优先做，可以用一个简单的打分思路：</p>
+<div class="tbl"><table><tr><th>维度</th><th>权重</th><th>评估问题</th></tr><tr><td>业务痛点强度</td><td>30分</td><td>这个场景的问题，员工有多痛？痛到影响工作情绪了吗？</td></tr><tr><td>使用频率</td><td>20分</td><td>这件事每天都在发生，还是一年只遇到几次？</td></tr><tr><td>数据基础</td><td>20分</td><td>相关文档和资料是否齐全？不需要大动干戈做清洗？</td></tr><tr><td>规则清晰度</td><td>15分</td><td>这件事有没有明确的制度、流程、标准和检查清单？</td></tr><tr><td>风险可控度</td><td>10分</td><td>AI处理错了，后果严重吗？有人能兜底吗？</td></tr><tr><td>推广复制能力</td><td>5分</td><td>一个部门跑通了，能复制到其他部门吗？</td></tr></table></div>
+<p>评分较高的场景进入第一批建设；价值高但数据条件不足的场景，可以先做流程梳理；价值低、实施难度又高的场景，暂缓。</p>
+<hr>
+<h3>工具只是手段</h3>
+<p>聊了这么多，可能会有人问：你用的什么工具？</p>
+<p>Codex、Claude、WorkBuddy、还有我们自研的多智能体执行系统ForgeOne——这些是我日常使用的工具链。但工具不是重点。<b>同样的场景，换一套工具也能做。</b> 真正不能替换的，是蹲在现场看客户怎么干活的那个过程。</p>
+<p>不同工具适合不同的环节：</p>
+<ul><li>需要快速出原型，用Codex或Claude直接生成；</li><li>需要改造工作流，用WorkBuddy做流程编排；</li><li>需要多个环节串联执行，用ForgeOne做多智能体协作；</li><li>涉及保密数据，AI辅助搭建、数据不出网。</li></ul>
+<p><b>工具选型的依据不是哪个更先进，而是哪个更匹配当下的业务约束。</b></p>
+<hr>
+<h3>下篇小结</h3>
+<p>把这套方法浓缩成一句话：</p>
+<blockquote><b>别想清楚了再动手。先找一个最痛的场景，用五步法跑起来，看到效果，下一步自然就清楚了。</b></blockquote>
+<p>第一篇文章（上篇）讲清了"为什么"——翻译比技术重要；这一篇给出了"怎么做"——五步工作法、挑场景、评估、选工具。</p>
+<p>两篇合在一起，就是我对"企业AI如何落地"的完整回答。</p>
+<p><b>我是AI流程架构师。</b> 不写代码，但能把业务流程拆成AI能跑的步骤；不教操作，但能让同事"不用学就会用"。</p>
+<hr>
+<p class="sign">AI进企业的第一道坎，不是技术，是翻译。而我就是那个翻译官。</p>
+      </article>
+    </details>
+    <details class="note-item">
+      <summary class="note"><span class="date mono">2026.08</span><span class="title">企业 AI 落地（1）：别急着教员工用 AI，先想想&quot;翻译&quot;这件事</span><span class="status mono">约 6 分钟</span></summary>
+      <article class="article">
+<blockquote>AI落地的关键，不是"教人用工具"，而是"把业务翻译成AI能执行的工作流"。这需要的是流程架构师，不是工具操作员。<br>—— 企业AI落地方法论 · 合集第一篇</blockquote>
+<hr>
+<h3>一个真实困境</h3>
+<p>"我们研究AI半年了，领导也很重视，但就是不知道从哪里开始。"</p>
+<p>这是过去两年我在和各种企业打交道时，听到最多的一句话。</p>
+<p>企业面临的不是技术焦虑，是决策焦虑——信息太多、场景太多、选择太多，反而不知道先做什么。我见过太多企业花几个月做调研、写PPT、开评审会，最后一个场景都没落地。</p>
+<p><b>真正的难题不是"AI能做什么"，而是"我该从哪里开始做"。</b></p>
+<p>而在回答这个问题之前，我想先讲几段真实的经历。它们共同指向一个结论：AI落地的第一道坎，从来不是技术。</p>
+<hr>
+<h3>我帮他们做了什么</h3>
+<p>过去一段时间，我在做一件具体的事：驻扎在客户现场，帮他们从日常工作中找到可以用AI提效的环节，然后真正落地到使用。</p>
+<p>以下是几个真实的案例。</p>
+<h4>案例一：药店老板的出入库</h4>
+<p>一位药店老板，每天花大量时间手写出入库记录。我问他：能不能拍照？他眼睛一亮：可以。</p>
+<p>于是我给他做了一个工具——拍照就能记录，照片自动识别商品名和数量，自动生成台账。他现在每天花在出入库上的时间，从半小时降到了几分钟。</p>
+<p><b>技术难度：极低。但我花了很长时间和他一起梳理：哪些环节可以合并，哪些信息必须人工确认，整个流程怎么跑通。</b></p>
+<h4>案例二：国企人事薪资管理系统</h4>
+<p>一家国企，员工很多，薪资核算靠Excel表格+人工核对。HR同事对每一条薪资规则都清楚，但说不清规则之间的关系——什么时候触发调薪、什么时候该停发、什么时候需要重新核算。</p>
+<p>我和她一起，把这些"说不清的关系"一条一条画了出来。画完之后，系统就自然长出来了。</p>
+<p><b>技术难度：中等。但最大的工作量，是和她反复沟通，把她脑子里的隐性逻辑显性化。</b></p>
+<h4>案例三：配套的操作手册和视频教程</h4>
+<p>系统做完之后，我发现光有系统还不够——使用者的习惯不会自动改变。</p>
+<p>于是我给每个系统都配套了操作手册和使用视频。药店老板照着视频，三分钟学会；国企同事拿着手册，可以自主排查常见问题。</p>
+<p><b>交付物不是一份PPT，是一套有人用的系统。</b></p>
+<h4>案例四：涉及核心保密数据的系统搭建</h4>
+<p>有一类企业数据——员工薪酬明细、核心配方、经营利润——碰都不能碰公网。</p>
+<p>我的做法是：用AI辅助搭建一套内部系统，数据全程不出局域网。AI负责写代码、搭架构、调逻辑，人负责定义规则和验收结果。最终交付的是一个跑在内网的独立系统，既能用AI的能力，又不触碰数据安全红线。</p>
+<p><b>技术难度：中高。关键不是能不能做，而是搞清楚"哪些事交给AI，哪些事必须人来把控"。</b></p>
+<h4>案例五：多智能体协作处理复杂任务</h4>
+<p>有些业务不是单一工具能解决的——比如一个审批流程涉及数据提取、规则校验、风险预警、报告生成四个环节，每个环节的输入输出都不同。</p>
+<p>我用自研的多智能体执行系统（ForgeOne），把每个环节交给一个专门的"智能体"处理，它们之间自动传递数据、协同工作。人只需要定义每个环节的规则，系统自己跑通整条链路。</p>
+<p><b>技术难度：高。但核心工作量不在写代码，在于拆解业务：每个环节的输入是什么、输出该交给谁、异常怎么回退。</b></p>
+<h4>案例六：AI无法替代的人工环节</h4>
+<p>不是所有工作都适合用AI。有些环节必须人来做——面对面沟通、需要判断力的决策、涉及信任关系的场景。</p>
+<p>我的做法是：把AI能做的全部自动化，剩下必须人做的部分，设计成标准化的工作流。每一步谁做、做什么、做完交给谁，流程图上画得清清楚楚。</p>
+<p><b>技术难度：低。但价值极高——员工终于知道自己该干什么、什么时候干、干完交给谁。</b></p>
+<h4>案例七：培训核心员工用AI提质增效</h4>
+<p>系统做完了，员工不会用，等于白做。</p>
+<p>我的做法不是开一场培训会就完了，而是先找到3-5个"种子用户"——他们本身业务熟练、对新工具有好奇心——手把手教他们用AI处理日常工作。等他们用出效果了，再由他们去带动其他人。</p>
+<p><b>关键心得：培训不是教功能，是教"什么时候该想到用AI"。功能会忘，但思维方式不会。</b></p>
+<hr>
+<h3>落地的真实难点</h3>
+<p>做完这些案例之后，我对"AI落地难"这件事有了不一样的理解。</p>
+<p>很多人以为难点在于：不知道怎么用AI、哪个AI工具更好、Prompt怎么写。</p>
+<p><b>但真正卡住的环节，从来不是这些。</b></p>
+<h4>难点一：从工作中找到可以用AI提效的环节</h4>
+<p>客户知道自己在做什么，但说不清哪些环节可以合并、可以省略、可以自动化。</p>
+<p>药店老板知道出入库怎么记，但从来没想过"拍照就能记"这件事。国企HR知道薪资怎么算，但从来没梳理过"人员流转"和"薪资核算"之间的触发关系。</p>
+<p><b>帮她画清楚工作地图，才是真正的价值。</b></p>
+<h4>难点二：真正落地到使用</h4>
+<p>做一个能跑通的概念验证不难，但让人真正用起来、用得顺手、出了问题知道怎么处理——这才是挑战。</p>
+<p>使用者的习惯不会自动改变。系统上线≠落地成功。</p>
+<h4>难点三：沟通成本和环节设计</h4>
+<p>每个客户的业务流程都是独一无二的。标准化的SaaS解决不了的问题，往往在于环节之间的逻辑关联。</p>
+<p>一件事触发另一件事，另一件事的结果又影响第三件事——这种事务之间的关联，才是设计的核心。</p>
+<hr>
+<h3>三个核心认知</h3>
+<p>做了这么多案例之后，我提炼出三个认知。它们是我做这件事的底层逻辑，也解释了为什么"教人用AI"这条路走不通。</p>
+<h4>认知一："翻译"比"使用"重要</h4>
+<p>大部分企业培训AI，是在教员工学AI的语法——怎么提问、怎么描述需求、怎么写Prompt。</p>
+<p>但我做的正好相反：<b>不是让人学会AI的语言，而是让AI学会业务的语言。</b></p>
+<p>把"记出入库"翻译成"拍照→识别→生成台账"，把"算薪资"翻译成"人员变动→触发调薪→重新核算"。AI听得懂的不是业务，是我翻译过去的动作链。</p>
+<p>所以问题的关键从来不在于员工"会不会问"，而在于有没有人把业务翻译成AI能执行的东西。</p>
+<h4>认知二："设计"比"操作"重要</h4>
+<p>企业里不缺会点按钮的人，缺的是能设计"别人怎么点按钮"的人。</p>
+<p>当你把业务拆成流程、把流程配成规则、把规则封装成员工不用动脑就能照做的指南——员工不再是操作员，而是流程的受益者。他们不需要记住每一件事怎么做，只需要按照设计好的工作流执行。</p>
+<p><b>做AI落地，我卖的不是工具，是"别人怎么用工具"这件事的设计。</b></p>
+<h4>认知三："赋能"比"替代"重要</h4>
+<p>很多人担心AI会取代员工——这不是我的视角。</p>
+<p>我做的是让AI把重复、繁琐、易错的部分吃掉，把员工从"这玩意儿怎么用"的困惑里解放出来，去做那些AI做不了的事。员工没有被替代，他们只是不再需要做机器擅长的事。</p>
+<p><b>AI进企业，替代的从来不是人，是重复劳动。</b></p>
+<hr>
+<h3>上篇小结</h3>
+<p>看完这些案例和三个认知，你应该理解了我为什么说"AI落地的第一道坎不是技术"。</p>
+<p>工具随时在变，案例各有不同，但底层的那件事始终没变：<b>有没有人能把业务翻译成AI能执行的工作流。</b></p>
+<p>这就是上篇想讲的"认识"。至于具体怎么做——五步工作法、怎么挑场景、怎么评估、用什么工具——我们在下篇展开。</p>
+<blockquote><b>下篇预告：《企业AI落地（下篇）：一套能让AI真正跑起来的五步工作法》</b><br>跟岗观察 → 痛点定位 → 流程拆解 → 翻译封装 → 赋能输出，以及怎么挑对第一个场景。</blockquote>
+<hr>
+<p class="sign">AI进企业的第一道坎，不是技术，是翻译。而我就是那个翻译官。</p>
+      </article>
+    </details>
+    <p class="note-foot mono">更多企业 AI 落地文章，见极星 AI 训练营的 FDE 专栏。</p>
   </div>
 
   <div data-key="contact" data-title="联系" data-n="OPEN CHANNEL">
@@ -481,7 +839,7 @@
   var state = {};
   try{ state = JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); }catch(e){ state = {}; }
 
-  var allKeys = ['about','jidiantong','forgeone','ceolab','fde','polaris','direction','interview','notes','contact'];
+  var allKeys = ['about','jidiantong','forgeone','ceolab','fde','sentinel','polaris','direction','interview','her','notes','contact'];
   var total = allKeys.length;
 
   var planets = Array.prototype.slice.call(document.querySelectorAll('.planet'));
