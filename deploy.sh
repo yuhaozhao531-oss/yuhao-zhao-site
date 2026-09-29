@@ -12,7 +12,7 @@ DIR=/opt/yuhao-zhao-website/public
 retry(){ for i in 1 2 3 4 5 6 7 8; do "$@" && return 0; echo "  连接被断开，第 $i 次重试..."; sleep 5; done; echo "失败：$*"; return 1; }
 
 echo "[1/4] 推送到 GitHub Pages"
-git push
+git -c http.sslBackend=openssl push   # Windows 默认的 schannel 偶尔握手失败
 
 echo "[2/4] 备份服务器上的旧页面"
 retry ssh -o ConnectTimeout=15 $REMOTE "cp $DIR/index.html $DIR/index.html.bak_\$(date +%Y%m%d%H%M)"
